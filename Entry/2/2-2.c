@@ -2,8 +2,12 @@
 
 int main(int argc, char * argv[])
 {
-    int n = 0;
-    scanf("%d", &n);    
+    // while 循环
+    //int n = 0;
+    long long n = 0;
+    
+    //scanf("%d", &n);    
+    scanf("%lld", &n);    
 
     int i = 0;
 

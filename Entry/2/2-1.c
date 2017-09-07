@@ -2,6 +2,7 @@
 
 int main(int argc, char * argv[])
 {
+    // for 循环
     // 循环
     int n = 1;
     //scanf("%d", &n);
