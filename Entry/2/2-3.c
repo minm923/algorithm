@@ -5,13 +5,15 @@ int main(int argc, char * argv[])
 {
     double sum = 0;
     int   term = 1;
+    int      S = -1;// 设置一个系数
 
     do
     {
-        sum += 1.0 / term;
-        // todo...
+        sum += -1 * S * 1.0 / term;
+        S *= -1;
+        term += 2;
     }
-    while(abs(1.0/term) > 1e-6);
+    while(1.0/term >= 1e-6);
 
     printf("%f\n", sum);
 
