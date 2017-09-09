@@ -9,8 +9,10 @@ int main(int argc, char * argv[])
     FILE* fin  = NULL;
     FILE* fout = NULL;
 
-    fin  = fopen("data.in", "rb");
-    fout = fopen("data.out", "wb");
+    fin = stdin;
+    fout = stdout;
+    //fin  = fopen("data.in", "rb");
+    //fout = fopen("data.out", "wb");
     if (!fin || !fout)
     {
         printf("file open fails...");
@@ -29,7 +31,8 @@ int main(int argc, char * argv[])
        {
             max = n;
        }
-       else if (n < min)
+
+       if (n < min)
        {
             min = n;
        }
@@ -38,10 +41,10 @@ int main(int argc, char * argv[])
         ++x;
     }
 
-    fprintf(fout, "max = %d, min = %d, sum = %.2f\n", max, min, (double)s/x);
+    fprintf(fout, "max = %d, min = %d, average = %.2f\n", max, min, (double)s/x);
 
-    fclose(fin);
-    fclose(fout);
+    //fclose(fin);
+    //fclose(fout);
 
     return 0;
 }
