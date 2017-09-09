@@ -1,3 +1,4 @@
+//#define LOCAL or g++ -o 5 2-5.c -DLOCAL
 #include <stdio.h>
 #include <time.h>
 
