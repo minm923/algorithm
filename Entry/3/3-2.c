@@ -21,8 +21,9 @@ int main(int argc, char * argv[])
     int i = 1;
     arr[x][y] = i;
 
-    while(i < sum) // 注意 < 号
+    while(i < sum) // 注意 < 号, <=会死循环 因为i == 16
     {
+        // 注意 x + 1 <n 的用法
         while(x+1 < n   && !arr[x+1][y]) arr[++x][y] = ++i;
         while(y-1 > -1  && !arr[x][y-1]) arr[x][--y] = ++i;
         while(x-1 > -1  && !arr[x-1][y]) arr[--x][y] = ++i;
