@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
     const int iLen = (int)strlen(buff);
     printf("iLen %d\n", iLen);
 
+    // 3-4 周期串
     for (int i=1; i<=iLen; ++i)
     {
         memcpy(buff2, buff, i);        
