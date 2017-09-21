@@ -76,24 +76,31 @@ void pile_a_onto_b(const int abox, const int apilenum, const int bbox, const int
 
     vector<int>::iterator it = find(pile[apilenum].begin(), pile[apilenum].end(), abox);
 
-    for(; it != pile[apilenum].end(); ++it)
+    if (it != pile[apilenum].end())
     {
-        pile[bpilenum].push_back(*it);
+        for(vector<int>::iterator itt=it; itt != pile[apilenum].end(); ++itt)
+        {
+            pile[bpilenum].push_back(*itt);
+        }
+        
+        pile[apilenum].erase(it, pile[apilenum].end());
     }
-    
-    pile[apilenum].erase(it, pile[apilenum].end());
+
 }
 
 void pile_a_over_b(const int abox, const int apilenum, const int bbox, const int bpilenum)
 {
     vector<int>::iterator it = find(pile[apilenum].begin(), pile[apilenum].end(), abox);
 
-    for(; it != pile[apilenum].end(); ++it)
+    if (it != pile[apilenum].end())
     {
-        pile[bpilenum].push_back(*it);
+        for(vector<int>::iterator itt=it; itt != pile[apilenum].end(); ++itt)
+        {
+            pile[bpilenum].push_back(*itt);
+        }
+        
+        pile[apilenum].erase(it, pile[apilenum].end());
     }
-    
-    pile[apilenum].erase(it, pile[apilenum].end());
 }
 
 int main(int argc, char * argv[])
