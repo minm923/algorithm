@@ -21,8 +21,6 @@ int find_box_in_which_pile(int box)
             return i;
         }
     }
-
-    printf("ERROR NOT FIND BOX %d\n", box);
 }
 
 void revert_position(const int box, const int pilenum)
