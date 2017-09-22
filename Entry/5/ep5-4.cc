@@ -3,37 +3,32 @@
 #include <sstream>
 #include <cctype>
 #include <set>
+#include <map>
+#include <algorithm>
 
 using namespace std;
 
 int main(int argc, char * argv[])
 {
+
+    map<string, int> mymap;
     set<string> myset;
     string s;
     while(cin >> s)
     {
-        // 非字母都替换成空格
-        for (int i=0; i<s.size(); ++i)                 
+        string ts = s;        
+
+        for (int i=0; i<ts.size(); ++i)
         {
-            if (!isalpha(s[i]))
-            {
-                s[i] = ' ';
-            }
-            else
-            {
-                s[i] = tolower(s[i]);
-            }
+            ts[i] = tolower(ts[i]);            
         }
 
-        stringstream ss(s);        
-        string word;
+        sort(ts.begin(), ts.end());        
 
-        while(ss >> word)
+        if (!mymap.count(ts))
         {
-            if (myset.find(word) == myset.end())
-            {
-                myset.insert(word);
-            }
+            mymap[ts] = 1;
+            myset.insert(s);
         }
     }
 
