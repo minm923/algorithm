@@ -6,6 +6,8 @@
 #include <queue>
 #include <map>
 
+// 队列练习
+
 const int TEAM_NUM = 1000;
 
 using namespace std;

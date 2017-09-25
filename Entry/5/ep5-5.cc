@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 
+// 集合练习
 using namespace std;
 
 typedef set<int> Set;
