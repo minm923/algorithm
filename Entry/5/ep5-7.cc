@@ -19,6 +19,10 @@ struct cmp
 
 priority_queue<int, vector<int>, cmp> pq;
 
+typedef long long LL;
+
+priority_queue<LL, vector<LL>, greater<LL> > pq2;
+
 int main(int argc, char * argv[])
 {
     pq.push(11);    
