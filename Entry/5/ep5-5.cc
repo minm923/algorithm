@@ -42,7 +42,8 @@ void empty_stack(stack<int>& s)
 int process(const int count);
 
 #define ALL(x) x.begin(),x.end()
-#define INS(x) inserter(x,x.begin())
+//#define INS(x) inserter(x,x.begin())
+#define INS(x) insert_iterator<set<int> >(x,x.begin())
 
 stack<int> s;
 
