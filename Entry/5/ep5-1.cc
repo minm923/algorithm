@@ -3,6 +3,11 @@
 
 using namespace std;
 
+int cmp(int a, int b)
+{
+    return a < b;
+}
+
 int main(int argc, char* argv[])
 {
     int n = 0;
@@ -18,7 +23,18 @@ int main(int argc, char* argv[])
         cin >> arr[i++]; 
     }
 
-    sort(arr, arr+Len);// 升序排列
+    // [arr, arr+Len)
+    sort(arr, arr+Len, cmp);// 升序排列
+    cout << "after sort" << endl;
+
+    for (int i=0; i<Len ; ++i)
+    {
+        cout << arr[i] << " ";
+    }
+
+    cout << endl;
+
+    return 0;
 
     int value = 0;
     cin >> value;
