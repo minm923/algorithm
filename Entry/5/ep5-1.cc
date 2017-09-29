@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <functional>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
     }
 
     // [arr, arr+Len)
-    sort(arr, arr+Len, cmp);// 升序排列
+    sort(arr, arr+Len, less<int>());// 升序排列
     cout << "after sort" << endl;
 
     for (int i=0; i<Len ; ++i)
