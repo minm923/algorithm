@@ -5,7 +5,8 @@
 #include <set>
 #include <queue>
 #include <map>
-#include <cstdint>
+#include <stdint.h>
+#include <cstdio>
 
 using namespace std;
 
@@ -29,11 +30,31 @@ struct BigInteger
     }
 
 
+    BigInteger operator = (const string& str)
+    {
+        s.clear();
+        int x = 0;
+        int len = (str.length() - 1) / WIDTH + 1;
+
+        for (int i=0; i<len; ++i)
+        {
+            int end = str.length() - i * WIDTH;
+            int start = max(0, end - WIDTH);
+
+            sscanf(str.substr(start, end-start).c_str(), "%d", &x);
+            s.push_back(x);
+        }
+    }
+
+
 };
 
 
 int main(int argc, char * argv[])
 {
+    string s = "0123456";        
+
+    cout << s.substr(1, 3) << endl;
 
     return 0;    
 }
