@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <exception>
+#include <stdexcept>
 
 struct BinaryTreeNode
 {
@@ -6,17 +8,6 @@ struct BinaryTreeNode
     struct BinaryTreeNode * m_pLeft;
     struct BinaryTreeNode * m_pRight;
 };
-
-
-BinaryTreeNode* Construct(int * preorder, int *inorder, int length)
-{
-    if (!preorder || !inorder || length <=0)
-    {
-        return NULL;
-    }
-
-    return ConstructCore(preorder, preorder+length-1, inorder, inorder+length-1);
-}
 
 BinaryTreeNode* ConstructCore(int * startPreorder, int * endPreorder, int * startInorder, int * endInorder)
 {
@@ -35,7 +26,8 @@ BinaryTreeNode* ConstructCore(int * startPreorder, int * endPreorder, int * star
         }
         else
         {
-            throw std::exception("Invalid input.");
+            std::logic_error ex("Invalid input.");            
+            throw std::exception(ex);
         }
     }
 
@@ -47,7 +39,8 @@ BinaryTreeNode* ConstructCore(int * startPreorder, int * endPreorder, int * star
 
     if (rootInorder > endInorder)
     {
-        throw std::exception("Invalid input.");
+            std::logic_error ex("Invalid input.");            
+            throw std::exception(ex);
     }
 
     int leftLength = rootInorder - startInorder;    
@@ -70,6 +63,15 @@ BinaryTreeNode* ConstructCore(int * startPreorder, int * endPreorder, int * star
     return root;
 }
 
+BinaryTreeNode* Construct(int * preorder, int *inorder, int length)
+{
+    if (!preorder || !inorder || length <=0)
+    {
+        return NULL;
+    }
+
+    return ConstructCore(preorder, preorder+length-1, inorder, inorder+length-1);
+}
 
 int main(int argc, char *argv[])
 {
