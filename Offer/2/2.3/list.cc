@@ -34,14 +34,46 @@ void AddToTail(struct ListNode** pHead, int value)
 
 int RemoveNode(struct ListNode** pHead, int value)
 {
-    struct ListNode * pFirst = *pHead;
+    int iDelNum = 0;
+    struct ListNode * pFirst  = *pHead;
+    struct ListNode * pSecond = NULL;
+    struct ListNode * pDel    = NULL;
 
     if (pHead != NULL && pFirst != NULL)
     {
+        if (pFirst->m_nValue == value)
+        {
+            (*pHead) = pFirst->m_pNext;
+            pDel = pFirst;
+            iDelNum = 1;
+        }
+        else
+        {
+            pSecond = pFirst->m_pNext;                                                                                    
 
+            while (pSecond)
+            {
+                if (pSecond->m_nValue == value)
+                {
+                    pDel = pSecond;
+                    pFirst->m_pNext = pSecond->m_pNext;
+                    iDelNum = 1;
+                }
+                else
+                {
+                    pFirst  = pSecond;
+                    pSecond = pSecond->m_pNext;
+                }
+            }
+        }
     }
 
-    return 0;
+    if (pDel != NULL)
+    {
+        delete pDel;
+    }
+
+    return iDelNum;
 }
 
 int main(int argc, char * argv[])
