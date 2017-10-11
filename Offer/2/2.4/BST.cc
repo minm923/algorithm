@@ -7,7 +7,57 @@ struct BSTNode
     BSTNode * p_right;    
 }
 
-int InsertBST(BSTNode** pRoot, int value)
+int SearchBST1(BSTNode* pNode, int value)
+{
+    if (pNode)
+    {
+        if (pNode->m_Value == value)
+        {
+            return value;
+        }
+        else if (pNode->m_Value > value)
+        {
+            return SearchBST(pNode->p_left, value);        
+        }
+        else
+        {
+            return SearchBST(pNode->p_right, value);        
+        }
+    }
+
+    return (-value + 1);
+}
+
+int SearchBST2(BSTNode* pNode, int value)
+{
+    if (pNode)
+    {
+        while (pNode)        
+        {
+            if (pNode->m_Value > value)
+            {
+                pNode = pNode->left;
+            }
+            else if (pNode->mValue < value)
+            {
+                pNode = pNode->right;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (pNode)
+        {
+            return value;
+        }
+    }
+
+    return (-value + 1);
+}
+
+int InsertBST1(BSTNode** pRoot, int value)
 {
     if (pRoot)
     {
@@ -65,6 +115,27 @@ int InsertCore(BSTNode* pNode, int value)
             return 1;
         }
     }
+}
+
+int InsertBST2(BSTNode** pRoot, int value)
+{
+    if (pRoot)
+    {
+        if ((*pRoot) == NULL)
+        {
+            (*pRoot) = new BSTNode();
+            (*pRoot)->m_Value = value;
+            (*pRoot)->p_left  = NULL;
+            (*pRoot)->p_right = NULL;
+
+        }
+        else
+        {
+
+        }
+    }
+
+    return 0;    
 }
 
 int main(int argc, char * argv[])
