@@ -32,6 +32,18 @@ void AddToTail(struct ListNode** pHead, int value)
     }
 }
 
+int RemoveNode(struct ListNode** pHead, int value)
+{
+    struct ListNode * pFirst = *pHead;
+
+    if (pHead != NULL && pFirst != NULL)
+    {
+
+    }
+
+    return 0;
+}
+
 int main(int argc, char * argv[])
 {
 
@@ -39,3 +51,4 @@ int main(int argc, char * argv[])
     
     return 0;
 }
+
