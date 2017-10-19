@@ -1,42 +1,21 @@
 #include <iostream>
 
-#define HEIGHT(p) ( (p==NULL)?0:(((Node*)(p))->height) )
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
-typedef int Type;
-
-typedef struct AVLTreeNode
+template<typename K, typename V>
+struct Entry
 {
-    Type key;
-    int height;
-    AVLTreeNode * left;
-    AVLTreeNode * right;
-}Node, *AVLTree;
+    K key;
+    V value;
 
-Node* avltree_create_node (Type key, Node* left, Node* right)
-{
-    Node * p   = new AVLTreeNode();
-    if (!p)
-    {
-        p->key     = key;
-        p->height  = 0;
-        p->left    = left;
-        p->right   = right;
-    }
-    
-    return p;
-}
+    Entry(K k=K(), V v=V()) : key(k),value(v) {}
+    Entry(Entry<K, V> const& e) : key(e.key), value(e.value) { }
 
-int avltree_height(AVLTree tree)
-{
-    return HEIGHT(tree);
-}
+    bool operator >  (Entry<K, V> const& e) { return key > e.key; }
+    bool operator <  (Entry<K, V> const& e) { return key < e.key; }
+    bool operator == (Entry<K, V> const& e) { return key == e.key; }
+    bool operator != (Entry<K, V> const& e) { return key != e.key; }
 
-Node* avltree_insert(AVLTree tree, Type key)
-{
+};
 
-}
 
 int main(int argc, char * argv[])
 {

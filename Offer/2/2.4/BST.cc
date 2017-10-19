@@ -118,6 +118,11 @@ int InsertBST2(BSTNode** pRoot, int value)
     return flg;
 }
 
+int Delete(BSTNode** pRoot, int value)
+{
+
+}
+
 int main(int argc, char * argv[])
 {
 
