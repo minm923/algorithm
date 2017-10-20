@@ -40,5 +40,11 @@ int main(int argc, char * argv[])
 
     cout << "ending.." << endl;
 
+    std::string ss("123");
+    cout << ss.size() << endl;
+    cout << ss[0] << endl;
+    cout << ss[1] << endl;
+    cout << ss[2] << endl;
+
     return 0;
 }
