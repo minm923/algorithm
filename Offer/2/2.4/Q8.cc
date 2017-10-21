@@ -48,10 +48,14 @@ int main(int argc, char *argv[])
     int arr[] = {4, 5, 6, 1, 2, 3};
     int arr2[] = {1, 2, 3, 4, 5, 6};
     int arr3[] = {1, 1, 1, 0, 1, 1};
+    int arr4[] = {1, 0, 1, 1, 1, 1};
+    int arr5[] = {1, 1, 1, 1, 1, 0};
 
     Min(arr, 6);
     Min(arr2, 6);
     Min(arr3, 6);
+    Min(arr4, 6);
+    Min(arr5, 6);
 
     return 0;
 }
