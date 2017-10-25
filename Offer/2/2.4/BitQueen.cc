@@ -9,7 +9,7 @@ void BitQueen(unsigned char A, unsigned char B, unsigned char C){
     }
     unsigned char D = ~(A|B|C);
     while(D){
-        unsigned char bit = D & (-D);
+        unsigned char bit = D & (-D);// 取出最右边的1
         D -= bit;
         BitQueen((A|bit)<<1, B|bit, (C|bit)>>1);
     }
