@@ -54,11 +54,25 @@ int IncreaseNumber(char* number, int n)
 
 void PrintNumber(char* number, int n)
 {
+    int flg = 0;
+    int startPosition = -1;
     for (int i=0; i<n; ++i)
     {
-        printf("%c", number[i]);
+        if ('0' != number[i])
+        {
+            startPosition = i;
+            break;
+        }
     }
-    printf("\n");
+
+    if (startPosition >= 0)
+    {
+        for (int i=startPosition; i<n; ++i)
+        {
+            printf("%c", number[i]);
+        }
+        printf("\n");
+    }
 }
 
 int PrintNBitNumber(int n)
