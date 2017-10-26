@@ -3,24 +3,37 @@
 
 struct ListNode
 {
-    int m_nValue;   
+    int m_nValue;
     ListNode* m_pNext;
 };
 
 ListNode* reverseList(ListNode* pHead)
 {
-    ListNode* pNode = new ListNode;
-    pNode->m_nValue = pHead->m_nValue;
-    pNode->m_pNext  = NULL;
-    
-    ListNode* pNext = pHead->m_pNext;
-    ListNode* pTmp  = NULL;
-    
-    while (pNext)
+    if (!pHead)
+        return NULL;
+
+    ListNode* pNode       = pHead;
+    ListNode* reverseList = NULL;
+    ListNode* pNext       = NULL;
+
+    while (!pNode)
     {
-        pTmp = new ListNode;        
-        pTmp->m_nValue = pHead;
+        pNext          = pNode->m_pNext;
+        pNode->m_pNext = NULL;
+
+        if (!reverseList)
+        {
+            reverseList = pNode;
+        }
+        else
+        {
+            pNode->m_pNext = reverseList;
+            reverseList   = pNode;
+        }
+        pNode = pNext;
     }
+
+    return reverseList;
 }
 
 int main(int argc, char* argv[])

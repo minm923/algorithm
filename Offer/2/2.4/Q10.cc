@@ -24,7 +24,7 @@ int NumberOf1_2(int n)
     while (n)
     {
         ++count;
-        n = (n-1) & n;// -1技巧
+        n = (n-1) & n;// -1 trick
     }
     printf("count = %d\n", count);
     return count;    
