@@ -26,27 +26,30 @@ int IsMaxNumber(char* number, int n)
 
 int IncreaseNumber(char* number, int n)
 {
-    if (IsMaxNumber(number, n))
-        return 0;
-
+    int overflow = 0;
     int flg = 1;
-    if (flg)
+    for (int i=n-1; i>=0; --i)        
     {
-        for (int i=n-1; i>=0; --i)        
+        number[i] += flg;
+        if (number[i] > '9')
         {
-            number[i] += flg;
-            flg = 0;
-            if (number[i] > '9')
+            if (0 == i)
+            {
+                overflow = 1;
+            }
+            else
             {
                 number[i] = '0';
                 flg = 1;
             }
         }
+        else
+        {
+            break;
+        }
     }
 
-
-
-    return 1;
+    return overflow;
 }
 
 void PrintNumber(char* number, int n)
@@ -69,7 +72,7 @@ int PrintNBitNumber(int n)
 
     InitNumber(number, n);
 
-    while (IncreaseNumber(number, n))
+    while (!IncreaseNumber(number, n))
     {
         PrintNumber(number, n);
     }
