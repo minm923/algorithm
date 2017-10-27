@@ -10,6 +10,7 @@ struct BinaryTreeNode
     BinaryTreeNode* m_pRight;
 };
 
+// attention 复杂问题自下而上 简单问题自上而下
 bool DoesTree1HasTree2(BinaryTreeNode* pTree1, BinaryTreeNode* pTree2)
 {
     if (NULL == pTree2)
