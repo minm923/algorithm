@@ -97,6 +97,7 @@ void solution(BinaryTreeNode* root, vector<int>& my, int value)
     }
 }
 
+// attention 试探与回溯
 void solution2(BinaryTreeNode* root, int value)
 {
     if (!root)
@@ -155,6 +156,10 @@ void solution2(BinaryTreeNode* root, int value)
             {
                     pFlg = ps.back();
                     ps.pop_back();
+            }
+            else
+            {
+                cout << " what the hell" << endl;
             }
         }
     }
