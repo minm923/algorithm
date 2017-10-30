@@ -44,6 +44,28 @@ int sumOfVector(vector<int>& my)
     return sum;    
 }
 
+int sumOfpVector(vector<BinaryTreeNode*>& ps)
+{
+    int sum = 0;
+
+    for (int i=0; i<ps.size(); ++i)
+    {
+        sum += ps[i]->m_nValue;
+    }
+
+    return sum;
+}
+
+void PrintPVector(vector<BinaryTreeNode*>& ps)
+{
+    cout << endl;
+    for (int i=0; i<ps.size(); ++i)
+    {
+        cout << ps[i]->m_nValue << " ";
+    }
+    cout << endl;
+}
+
 void PrintVector(vector<int>& my)
 {
     cout << endl;
@@ -75,9 +97,67 @@ void solution(BinaryTreeNode* root, vector<int>& my, int value)
     }
 }
 
-void solution2(BinaryTreeNode* root)
+void solution2(BinaryTreeNode* root, int value)
 {
+    if (!root)
+        return ;
 
+    vector<BinaryTreeNode*> ps;
+    ps.push_back(root);
+    BinaryTreeNode* pFlg = NULL;
+    BinaryTreeNode* pTop = NULL;
+    bool bTest = 1;
+
+    while (ps.size() > 0)
+    {
+        pTop = ps.back();
+
+        if (bTest)// 试探
+        {
+            if (pTop->m_pLeft)
+            {
+                ps.push_back(pTop->m_pLeft);
+            }
+            else
+            {
+                if (pTop->m_pRight)
+                {
+                    ps.push_back(pTop->m_pRight);
+                }
+                else// 叶子节点
+                {
+                    if (sumOfpVector(ps) == value)
+                    {
+                        PrintPVector(ps);
+                    }
+                    pFlg = ps.back();
+                    ps.pop_back();
+                    bTest = 0;
+                }
+            }
+        }
+        else// 回溯
+        {
+            if (pFlg == pTop->m_pLeft)
+            {
+                if (pTop->m_pRight)
+                {
+                    ps.push_back(pTop->m_pRight);
+                    bTest = 1;
+                }
+                else
+                {
+                    pFlg = ps.back();
+                    ps.pop_back();
+                }
+            }
+            else if (pFlg == pTop->m_pRight)
+            {
+                    pFlg = ps.back();
+                    ps.pop_back();
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[])
@@ -85,7 +165,8 @@ int main(int argc, char* argv[])
     BinaryTreeNode* tree = NULL;
     CreateBiTree(&tree);
     vector<int> mv;
-    solution(tree, mv, 8);
+    //solution(tree, mv, 8);
+    solution2(tree, 9);
 
     return 0;
 }
