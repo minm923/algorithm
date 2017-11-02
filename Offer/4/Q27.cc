@@ -121,7 +121,55 @@ void MidorderTraverse(BinaryTreeNode* pRoot)
 
 void PostorderTraverse(BinaryTreeNode* pRoot)
 {
+    if (!pRoot)
+        return ;
 
+    int flg = 1;// push flg
+    vector<BinaryTreeNode*> ms;
+    ms.push_back(pRoot);
+    BinaryTreeNode* pTop      = NULL;
+    BinaryTreeNode* pLastVist = NULL;
+
+    while (ms.size() > 0)        
+    {
+        pTop = ms.back();
+        if (flg)
+        {
+            if (pTop->m_pLeft)
+            {
+                ms.push_back(pTop->m_pLeft);
+            }
+            else// pTop->m_pLeft == NULL
+            {
+                flg = 0;
+            }
+        }
+        else
+        {
+            if (pTop->m_pRight)
+            {
+                if (pTop->m_pRight != pLastVist)
+                {
+                    ms.push_back(pTop->m_pRight);
+                    flg = 1;
+                }
+                else
+                {
+                    cout << pTop->m_nValue <<" ";
+                    pLastVist = pTop;
+                    ms.pop_back();
+                }
+            }
+            else
+            {
+                    cout << pTop->m_nValue <<" ";
+                    pLastVist = pTop;
+                    ms.pop_back();
+            }
+        }
+    }
+
+    cout << endl;
 }
 
 int main(int argc, char* argv[])
@@ -130,6 +178,7 @@ int main(int argc, char* argv[])
     CreateBiTree(&tree);
     InorderTraverse(tree);
     MidorderTraverse(tree);
+    PostorderTraverse(tree);
 
     return 0;
 }
