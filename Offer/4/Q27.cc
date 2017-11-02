@@ -63,24 +63,6 @@ void InorderTraverse(BinaryTreeNode* pRoot)
     cout << endl;
 }
 
-void InorderTraverse2(BinaryTreeNode* pRoot)
-{
-    if (!pRoot)
-        return ;
-    vector<BinaryTreeNode*> ms;       
-    ms.push_back(pRoot);
-    BinaryTreeNode* pTop = NULL;
-
-    while (ms.size() > 0)
-    {
-        pTop = ms.back();
-        ms.pop_back();
-
-
-    }
-    cout << endl;
-}
-
 void MidorderTraverse(BinaryTreeNode* pRoot)
 {
     if (!pRoot)
