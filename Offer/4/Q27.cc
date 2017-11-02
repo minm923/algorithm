@@ -154,13 +154,101 @@ void PostorderTraverse(BinaryTreeNode* pRoot)
     cout << endl;
 }
 
+BinaryTreeNode* ConvertTreeToList(BinaryTreeNode* pRoot)
+{
+    if (!pRoot)
+        return NULL;
+
+    int flg = 1;// push flg
+    vector<BinaryTreeNode*> ms;
+    ms.push_back(pRoot);
+    BinaryTreeNode* pTop = NULL;
+
+    BinaryTreeNode* pHead = NULL;
+    BinaryTreeNode* pNode = NULL;
+
+    while (ms.size() > 0)
+    {
+        pTop = ms.back();
+        if (flg)
+        {
+            if (pTop->m_pLeft)
+            {
+                ms.push_back(pTop->m_pLeft);
+            }
+            else
+            {
+                flg = 0;
+            }
+        }
+        else
+        {
+            cout << pTop->m_nValue << " ";
+            ms.pop_back();
+            if (pTop->m_pRight)
+            {
+                ms.push_back(pTop->m_pRight);
+                flg = 1;
+            }
+
+            if (!pHead)
+            {
+                pHead = pTop;
+                pNode = pTop;
+                
+                pNode->m_pLeft  = NULL;
+                pNode->m_pRight = NULL;
+            }
+            else
+            {
+                pTop->m_pLeft  = NULL;
+                pTop->m_pRight = NULL;
+
+                pNode->m_pRight = pTop;
+                pTop->m_pLeft   = pNode;
+
+                pNode = pTop;
+            }
+        }
+    }
+
+    cout << endl;
+
+    return pHead;
+}
+
+void TraverseList(BinaryTreeNode* node)
+{
+    while (node->m_pRight)
+    {
+        cout << node->m_nValue << " ";
+        node = node->m_pRight;
+    }
+
+    cout << node->m_nValue << " ";
+    cout << endl;
+
+    while (node->m_pLeft)
+    {
+        cout << node->m_nValue << " ";
+        node = node->m_pLeft;
+    }
+    
+    cout << node->m_nValue << " ";
+    cout << endl;
+}
+
 int main(int argc, char* argv[])
 {
     BinaryTreeNode* tree = NULL;
     CreateBiTree(&tree);
-    InorderTraverse(tree);
-    MidorderTraverse(tree);
-    PostorderTraverse(tree);
+    //InorderTraverse(tree);
+    //MidorderTraverse(tree);
+    //PostorderTraverse(tree);
+
+    BinaryTreeNode* node = ConvertTreeToList(tree);
+    TraverseList(node);
+
 
     return 0;
 }
