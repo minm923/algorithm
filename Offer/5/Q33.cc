@@ -3,6 +3,7 @@
 #include <iostream>
 #include <limits.h>
 #include <string.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -48,21 +49,13 @@ void solution(int* arr, int iLen)
     printf("\n");
 }
 
-/*
 // 使用qsort版本
 void solution2(int* arr, int iLen)
 {
     if (!arr || iLen <=0)
         return ;
 
-    char * strNumber[MAX_NUM] = {0};
-
-    for (int i=0; i<iLen; ++i)
-    {
-            
-    }
-
-    qsort();
+    sort(arr, arr+iLen, IsFirstEleForwardSecondEle);
 
     for (int i=0; i<iLen; ++i)
         printf("%d", arr[i]);
@@ -70,7 +63,6 @@ void solution2(int* arr, int iLen)
     printf("\n");
 
 }
-*/
 
 int main(int argc, char* argv[])
 {
@@ -78,10 +70,22 @@ int main(int argc, char* argv[])
     int arr2[]  = {25, 76, 86, 23, 45};
     int arr3[]  = {9, 2, 3, 56, 3};
 
+    cout << "solution1"  << endl;
+
     solution(arr, 3);
     solution(arr2, 5);
     solution(arr3, 5);
 
+    cout << "solution2" << endl;
+
+    int arr4[]  = {3, 32, 321};
+    int arr5[]  = {25, 76, 86, 23, 45};
+    int arr6[]  = {9, 2, 3, 56, 3};
+
+
+    solution2(arr4, 3);
+    solution2(arr5, 5);
+    solution2(arr6, 5);
 
     return 0;    
 }
