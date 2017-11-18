@@ -1,1 +1,0 @@
-/home/gaomin/cmake/t2/build/bin/CMakeFiles/hello.dir
