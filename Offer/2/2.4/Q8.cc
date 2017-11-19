@@ -1,49 +1,95 @@
+#include <vector>
 #include <stdio.h>
 
-int* Min(int* number, int len)
-{
-    if (!number || len <=0)
-    {
-        return NULL;
-    }
+using namespace std;
 
-    int front = 0;
-    int end   = len - 1;
-    int mid   = (end - front) / 2 + front;
-
-    if (number[front] < number[end])
+int minNumberInRotateArray(vector<int> rotateArray) {
+    int i = rotateArray.size();
+    if (i<=0)
+        return 0;
+    
+    int begin = 0;
+    int end   = i - 1;
+    
+    if (rotateArray[begin] < rotateArray[end])
     {
-        printf("min %d\n", number[front]);        
-        return number;
+        return rotateArray[begin];
     }
     else
     {
-        while (front+1 != end)
+        while (begin+1 < end)
         {
-            int mid_value = number[mid];
-            if (mid_value > number[front])
+            int mid = (end - begin) / 2 + begin;
+            if (rotateArray[mid] > rotateArray[begin])
             {
-                front = mid;
+                begin = mid;
             }
-            else if (mid_value < number[front])
+            else
+            {
+                end = mid;
+            }
+        }
+
+        int first  = rotateArray[begin];
+        int second = rotateArray[end];
+        return  first > second ? second : first;
+    }            
+}
+
+int mymin2(int* rotateArray, int begin, int end)
+{
+    int imin = rotateArray[begin];
+    for (int i=begin; i<=end; ++i)
+    {
+        if (rotateArray[i] < imin)
+            imin = rotateArray[i];
+    }
+
+    printf("res %d\n", imin);
+    return imin;
+}
+
+int mymin(int* rotateArray, int i)
+{
+    if (i<=0)
+        return 0;
+    
+    int begin = 0;
+    int end   = i - 1;
+    
+    if (rotateArray[begin] < rotateArray[end])
+    {
+        printf("res %d\n", rotateArray[begin]);
+        return rotateArray[begin];
+    }
+    else
+    {
+        while (begin+1 < end)
+        {
+            int mid = (end - begin) / 2 + begin;
+            if (rotateArray[mid] > rotateArray[begin])
+            {
+                begin = mid;
+            }
+            else if (rotateArray[mid] < rotateArray[begin]) 
             {
                 end = mid;
             }
             else
             {
-                front += 1;
+                return mymin2(rotateArray, begin, end);
             }
-            
-            mid = (end - front) / 2 + front;
         }
+
+        int first  = rotateArray[begin];
+        int second = rotateArray[end];
+        int res = first > second ? second : first;
+        printf("res %d\n", res);
+        return res;
     }
-
-    printf("min %d\n", number[end]);
-
-    return number+end;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char * argv[])
 {
     int arr[] = {4, 5, 6, 1, 2, 3};
     int arr2[] = {1, 2, 3, 4, 5, 6};
@@ -51,11 +97,11 @@ int main(int argc, char *argv[])
     int arr4[] = {1, 0, 1, 1, 1, 1};
     int arr5[] = {1, 1, 1, 1, 1, 0};
 
-    Min(arr, 6);
-    Min(arr2, 6);
-    Min(arr3, 6);
-    Min(arr4, 6);
-    Min(arr5, 6);
+    mymin(arr, 6);
+    mymin(arr2, 6);
+    mymin(arr3, 6);
+    mymin(arr4, 6);
+    mymin(arr5, 6);
 
     return 0;
 }
