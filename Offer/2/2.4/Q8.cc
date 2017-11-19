@@ -3,39 +3,6 @@
 
 using namespace std;
 
-int minNumberInRotateArray(vector<int> rotateArray) {
-    int i = rotateArray.size();
-    if (i<=0)
-        return 0;
-    
-    int begin = 0;
-    int end   = i - 1;
-    
-    if (rotateArray[begin] < rotateArray[end])
-    {
-        return rotateArray[begin];
-    }
-    else
-    {
-        while (begin+1 < end)
-        {
-            int mid = (end - begin) / 2 + begin;
-            if (rotateArray[mid] > rotateArray[begin])
-            {
-                begin = mid;
-            }
-            else
-            {
-                end = mid;
-            }
-        }
-
-        int first  = rotateArray[begin];
-        int second = rotateArray[end];
-        return  first > second ? second : first;
-    }            
-}
-
 int mymin2(int* rotateArray, int begin, int end)
 {
     int imin = rotateArray[begin];
