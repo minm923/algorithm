@@ -21,7 +21,7 @@ int BinarySearch(int* arr, int low, int high, int value)
             }
             else
             {
-                return value;
+                return mid;
             }
         }
     }
