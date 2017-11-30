@@ -20,7 +20,7 @@ do
  
     ;;        
         matchsvr)
-            MATCHSVR_ID=$(ps aux | grep $OWNER | grep --color -e '\./globalsvr' | grep -v 'grep' | grep -v 'tail' |  awk '{printf $13}')
+            MATCHSVR_ID=$(ps aux | grep $OWNER | grep --color -e '\./matchsvr' | grep -v 'grep' | grep -v 'tail' |  awk '{printf $13}')
             SVR_IDS=${SVR_IDS}\\\|${MATCHSVR_ID}
     ;;        
         roomsvr)
@@ -37,8 +37,9 @@ done
 SVR_IDS=${SVR_IDS}\\\)
 echo $SVR_IDS
 
+# modify here
 PREFIX=gamesvr
-FILE_NAME_REG=${PREFIX}_[0-9]*.log
+FILE_NAME_REG=${PREFIX}_[0-9]*.log*
 #echo $FILE_NAME_REG
 
 FILE_NAME=$(find . -name "$FILE_NAME_REG" -mmin -1)
