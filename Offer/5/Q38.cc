@@ -58,17 +58,34 @@ int solution(int* start, int len, int value)
     return count;
 }
 
+// 不可行
+int solution2(int* start, int len, int value)
+{
+    if (!start || len <=0)
+        return 0;
+
+    int* midv = valueposition(start, len, value);
+    if (midv)
+    {
+        int* firstv = valueposition(start, midv-start+1, value);
+        int* lastv  = valueposition(midv, start+len-midv, value);
+
+        return lastv - firstv + 1;
+    }
+    
+    return 0;
+}
+
 int main(int argc, char * argv[])
 {
     int arr[] = {1,2,3,3,3,3,5};
 
-    printf("%d \n",solution(arr, 7, 3));
-    printf("%d \n",solution(arr, 7, 1));
-    printf("%d \n",solution(arr, 7, 2));
-    printf("%d \n",solution(arr, 7, 5));
-    printf("%d \n",solution(arr, 7, 4));
-    printf("%d \n",solution(arr, 7, 0));
-
+    printf("%d \n",solution2(arr, 7, 3));
+    printf("%d \n",solution2(arr, 7, 1));
+    printf("%d \n",solution2(arr, 7, 2));
+    printf("%d \n",solution2(arr, 7, 5));
+    printf("%d \n",solution2(arr, 7, 4));
+    printf("%d \n",solution2(arr, 7, 0));
 
     return 0;
 }
