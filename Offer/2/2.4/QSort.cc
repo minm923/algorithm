@@ -4,17 +4,22 @@
 
 using namespace std;
 
-// 分割算法
 int Partition(int* arr, int low, int high)
 {
     int ipovit = arr[low];
     while(low < high)
     {
         while(low < high && arr[high] >= ipovit && --high);// >=
-        arr[low] = arr[high];
+        if (low >= high)
+            break;
+        else
+            arr[low] = arr[high];
 
         while(low < high && arr[low] < ipovit && ++low);
-        arr[high] = arr[low];
+        if (low >= high)
+            break;
+        else
+            arr[high] = arr[low];
     }
 
     arr[high] = ipovit;
