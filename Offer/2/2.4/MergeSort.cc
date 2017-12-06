@@ -60,7 +60,7 @@ void MergeSort(int* input, int* output, int iLen)
 
 int main(int argc, char* argv[])
 {
-    int arr1[] = {3, 5, 7, 2, 6, 9, 28, 0, 4};
+    int arr1[] = {3, 5, 2, 2, 6, 9, 28, 0, 4};
     int arr2[9];
 
     memset(arr2, 0, sizeof arr2);
@@ -74,3 +74,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
