@@ -1,11 +1,23 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include <time.h>
 
 using namespace std;
 
+void movepovit(int* arr, int low,int high)
+{
+    int base = high-low+1;
+    int index = low + random()%base;
+    int tmp = arr[index];
+    arr[index] = arr[low];
+    arr[low] = tmp;
+}
+
 int Partition(int* arr, int low, int high)
 {
+    movepovit(arr, low, high);
+
     int ipovit = arr[low];
     while(low < high)
     {
@@ -54,6 +66,7 @@ void QuickSort(int* arr, int len)
 
 int main(int argc, char * argv[])
 {
+    srand(time(NULL));
     int arr[] = {9, 8, 7, 5, 4, 3, 2, 1, 0};
     int arr2[] = {1,2,1,0,2,0};
     int arr3[] = {1,1,1,1,1,0};
@@ -74,4 +87,3 @@ int main(int argc, char * argv[])
 
     return 0;
 }
-
