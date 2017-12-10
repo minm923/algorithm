@@ -1,31 +1,47 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include <time.h>
 
 using namespace std;
 
+void movepovit(int* arr, int low,int high)
+{
+    int base = high-low+1;
+    int index = low + random()%base;
+    int tmp = arr[index];
+    arr[index] = arr[low];
+    arr[low] = tmp;
+}
+
 int Partition(int* arr, int low, int high)
 {
-    int iPovit = arr[low];
+    movepovit(arr, low, high);
 
-    while (low < high)
+    int ipovit = arr[low];
+    while(low < high)
     {
-        while (low < high && arr[high] > iPovit && --high);
-        arr[low] = arr[high];
+        while(low < high && arr[high] >= ipovit && --high);// >=
+        if (low >= high)
+            break;
+        else
+            arr[low] = arr[high];
 
-        while (low < high && arr[low]  < iPovit && ++low);
-        arr[high] = arr[low];
+        while(low < high && arr[low] < ipovit && ++low);
+        if (low >= high)
+            break;
+        else
+            arr[high] = arr[low];
     }
 
-    arr[high] = iPovit;
+    arr[high] = ipovit;
 
-    return high;        
+    return high;
 }
 
 void QSort(int* arr, int low, int high)
 {
     int iPivotPos = Partition(arr, low, high);
-    cout << "PivotPos :" << iPivotPos << endl;
 
     if (iPivotPos-1 > low)
     {
@@ -38,24 +54,36 @@ void QSort(int* arr, int low, int high)
     }
 }
 
-void QuickSort(int* arr, int low, int high)
+void QuickSort(int* arr, int len)
 {
-    if (!arr || low <0 || high <0 || high<low)
+    if (!arr || len <=0)
     {
         return ;        
     }
 
-    QSort(arr, low, high);
+    QSort(arr, 0, len-1);
 }
 
 int main(int argc, char * argv[])
 {
+    srand(time(NULL));
     int arr[] = {9, 8, 7, 5, 4, 3, 2, 1, 0};
+    int arr2[] = {1,2,1,0,2,0};
+    int arr3[] = {1,1,1,1,1,0};
+    int arr4[] = {0,0,0,0,0,0};
 
-    QuickSort(arr, 0, sizeof(arr)/sizeof(arr[0]) );
+    QuickSort(arr, sizeof(arr)/sizeof(arr[0]));
     copy(arr, arr+sizeof(arr)/sizeof(arr[0]), ostream_iterator<int>(cout, "\n"));
-    
+
+    cout<< "next" << endl;
+    QuickSort(arr2, sizeof(arr2)/sizeof(arr2[0]));
+    copy(arr2, arr2+sizeof(arr2)/sizeof(arr2[0]), ostream_iterator<int>(cout, "\n"));
+    cout<< "next" << endl;
+    QuickSort(arr3, sizeof(arr3)/sizeof(arr3[0]));
+    copy(arr3, arr3+sizeof(arr3)/sizeof(arr3[0]), ostream_iterator<int>(cout, "\n"));
+    cout<< "next" << endl;
+    QuickSort(arr4, sizeof(arr4)/sizeof(arr4[0]));
+    copy(arr4, arr4+sizeof(arr4)/sizeof(arr4[0]), ostream_iterator<int>(cout, "\n"));
 
     return 0;
 }
-
