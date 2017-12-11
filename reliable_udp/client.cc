@@ -1,76 +1,84 @@
-#include <assert.h>
+#include "uv.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <uv.h>
-
-uv_loop_t *loop;
-uv_udp_t send_socket;
-uv_udp_t recv_socket;
-
-void alloc_buffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
-  buf->base = (char*) malloc(suggested_size);
-  buf->len = suggested_size;
+static void alloc_cb(uv_handle_t* handle,
+    size_t suggested_size,
+    uv_buf_t* buf) 
+{
+    static char slab[65536];
+    buf->base = slab;
+    buf->len = sizeof(slab);
 }
 
-void on_read(uv_udp_t *req, ssize_t nread, const uv_buf_t *buf, const struct sockaddr *addr, unsigned flags) 
+static void close_cb(uv_handle_t* handle) 
 {
-    if (nread < 0) {
-        fprintf(stderr, "Read error %s\n", uv_err_name(nread));
-        uv_close((uv_handle_t*) req, NULL);
-        free(buf->base);
+    uv_is_closing(handle);
+}
+
+static void cl_recv_cb(uv_udp_t* handle,
+    ssize_t nread,
+    const uv_buf_t* buf,
+    const struct sockaddr* addr,
+    unsigned flags) 
+{
+    if (nread < 0) 
+    {
+        //error happens
         return;
     }
 
-    fprintf(stdout, "recv : ");
-    for (int i=0; i<buf->len; ++i)
+    if (nread == 0) 
     {
-        fprintf(stdout, "%c", buf->base[i]);
+        return;
     }
 
-    free(buf->base);
-    //uv_udp_recv_stop(req);
+    printf("I receive the message from server:%s\n", buf->base);
+    
+    //uv_close((uv_handle_t*) handle, close_cb);
 }
 
-void on_send(uv_udp_send_t *req, int status) {
-    if (status) 
-    {
-        fprintf(stderr, "Send error %s\n", uv_strerror(status));
+
+static void cl_send_cb(uv_udp_send_t* req, int status) 
+{   
+    if (status) {
+        printf("Send error %s\n", uv_strerror(status));
         return;
     }
     else
     {
-       fprintf(stdout, "Send out....\n");
+        uv_udp_recv_start(req->handle, alloc_cb, cl_recv_cb);    
     }
 }
 
-int main(int argc, char* argv[])
+int main(void) 
 {
-    loop = uv_default_loop();
+    uv_udp_t client; 
+    uv_loop_t* loop = uv_default_loop();
+    int r = uv_udp_init(loop, &client);   
 
-    // receive
-    uv_udp_init(loop, &recv_socket);
-    struct sockaddr_in recv_addr;
-    uv_ip4_addr("127.0.0.1", 6666, &recv_addr);
-    uv_udp_bind(&recv_socket, (const struct sockaddr *)&recv_addr, UV_UDP_REUSEADDR);
-    uv_udp_recv_start(&recv_socket, alloc_buffer, on_read);
+    struct sockaddr_in addr;    
+    r = uv_ip4_addr("127.0.0.1", 8899, &addr);  
 
+    char snd[] = "PING";
+    uv_buf_t buf;
+    buf = uv_buf_init(snd, 4);
 
-    // send
-    uv_udp_init(loop, &send_socket);
-    struct sockaddr_in send_addr;
-    uv_ip4_addr("127.0.0.1", 9999, &send_addr);
+    printf("I am sending message to server:%s.\n", buf.base);
 
-    uv_buf_t buffer;
-    alloc_buffer(NULL, 256, &buffer);
-    memset(buffer.base, 0, buffer.len);
-    memcpy(buffer.base, "hello server", 13);
+    uv_udp_send_t req;
+    uv_udp_send(
+        &req,
+        &client,
+        &buf,
+        1,
+        (const struct sockaddr*) &addr,
+        cl_send_cb);    
 
-    uv_udp_send_t send_req;
-    int ret = uv_udp_send(&send_req, &send_socket, &buffer, 1, (const struct sockaddr *)&send_addr, on_send);
-    printf("send ret %d \n", ret);
+    uv_run(loop, UV_RUN_DEFAULT);
 
-    return uv_run(loop, UV_RUN_DEFAULT);
+    return 0;
 }
 

@@ -1,1 +1,1 @@
-g++ -I /usr/local/include -L /usr/local/lib -l uv client.cc -o client -ggdb -O2;g++ -I /usr/local/include -L /usr/local/lib -l uv server.cc -o server -O2 -ggdb;
+g++ -I dep/libuv/include client.cc dep/libuv/lib/libuv.a -o client -lpthread -lrt;g++ -I dep/libuv/include  server.cc dep/libuv/lib/libuv.a -o server -lpthread -lrt;
