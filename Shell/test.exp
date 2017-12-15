@@ -1,0 +1,6 @@
+#!/usr/bin/expect
+
+spawn ./control_start.sh 
+send "test_svr_connection\r"
+send "quit\r"
+expect eof
