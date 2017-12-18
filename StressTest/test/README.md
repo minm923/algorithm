@@ -3,7 +3,7 @@
 # run
 cd run;
 ./admin.sh start mysvr
-# top
+# stop
 ./admin.sh stop mysvr
 
 
