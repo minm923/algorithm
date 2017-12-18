@@ -1,0 +1,68 @@
+syntax = "proto2";
+
+package cs;
+
+// CS_GET_GAME_SVR_MIN_LOAD_REQ 获取负载最轻的 gamesvr 请求
+message CSGetGameSvrMinLoadReq
+{
+}
+
+// CS_GET_GAME_SVR_MIN_LOAD_RES 获取负载最轻的 gamesvr 回复
+message CSGetGameSvrMinLoadRes
+{
+    message GameSvrHost
+    {
+        required string Ip = 1;
+        required int32 Port = 2;
+    }
+
+    // 0: 表示成功; 1 表示服务器已满
+    required int32 RetCode = 1;
+
+    // 服务器会返回一个或者几个负载最轻的，客户端随机选一个来连接
+    repeated GameSvrHost Hosts = 2;
+}
+
+// CS_HEARTBEAT_REQ 心跳请求
+message CSHeartbeatReq
+{
+}
+
+// CS_HEARTBEAT_RES 心跳回复
+message CSHeartbeatRes
+{
+    // 几秒后发心跳包
+    required uint32 TickSec = 1;
+}
+
+// CS_UPDATE_SECRET_KEY_REQ 客户端主动获取秘钥请求
+message CSUpdateSecretKeyReq
+{
+}
+
+// CS_UPDATE_SECRET_KEY_RES 客户端主动获取秘钥回复
+message CSUpdateSecretKeyRes
+{
+    required bytes SecretKey = 1;
+}
+
+// CS_KICK_OFF_NOTIFY 踢玩家下线
+message CSKickOffNotify
+{
+}
+
+
+// CS_PING_REQ ping包请求, 客户端显示ping值
+message CSPingReq
+{
+    required uint32 ClientTm = 1;   // 客户端时间戳
+}
+
+
+// CS_PING_RES ping包回复
+message CSPingRes
+{
+    required uint32 ClientTm = 1;   // 客户端时间戳
+}
+
+

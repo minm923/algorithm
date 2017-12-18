@@ -1,0 +1,166 @@
+syntax = "proto2";
+
+package cs;
+
+// 三维向量
+message CSVector3
+{
+    required float x = 1;
+    required float y = 2;
+    required float z = 3;
+}
+
+message BaseInfoType
+{
+    optional int32 PlayerID = 1;//玩家ID
+    optional string Name = 2;//玩家昵称
+    optional int32 PlayerElo = 3;//玩家elo
+    optional int32 PlayerColor = 4;//玩家颜色
+    optional int32 PlayerMoney = 5;//玩家金币
+    optional int32 PlayerStone = 6;//玩家金币
+    optional int32 PlayerSteel = 7;//玩家金币
+    optional int32 PlayerHardCurrency = 8;//玩家钻石
+    optional int32 PlayerXp = 9;//玩家经验
+    optional int32 PlayerLevel = 10;//玩家等级
+    optional int32 UnlockedTerritoryMaxID = 11;//当前已经解锁的地块信息
+    optional int32 RankSection = 12;//排行大段
+    optional int32 RankSubsection = 13;//排行子段
+    optional int32 AllianceId = 14;// 公会ID
+    optional int32 AllianceSignet = 15;//公会徽记
+    optional int32 AllianceMemType = 16;// 玩家的公会身份
+    optional float PlayerPower = 17;// 体力信息
+    optional int32 VipID = 18;// 会员ID
+    optional int32 VipTime = 19;// 会员剩余时间（单位s）
+    optional int32 PlayerHo = 20;//PVP荣誉点
+}
+
+//版本资源类型
+message VersionResourceType
+{
+    required string GameVersion = 1;//app版本 1.0.1
+    required string OsType = 2;//系统类型 ANDROID 或者IOS 注：该字段和下载URL相关
+    required string ChanMerchant = 3;//渠道商 default 或者 apple  注：该字段和下载URL相关
+    optional string ResourceVersion = 4;//app资源版本 1.0.1
+}
+
+// key-value 键值对
+message KeyValue
+{
+    required string key 	= 1;
+    required string value 	= 2;
+}
+
+// 物品
+message Item
+{
+    required int32 Type 	= 1;	//游戏物品大类
+    required int32 SubType 	= 2;	//游戏物品小类
+    required int32 num 		= 3;	//游戏物品数量
+}
+
+// 物品列表
+message ItemList
+{
+    repeated Item item 	= 1;	//物品列表
+}
+
+//任务信息
+message QuestInfo
+{
+    required string QuestId = 1;//任务id
+    required int32 State = 2;//任务状态
+    required int32 Value = 3;//任务完成总量
+    required int32 OffsetColor = 4;//颜色偏移量
+    required int32 TaskLv = 5;      //任务等级
+    required int32 IsVip = 6;      //是否是VIP
+}
+
+//成就信息
+message AchievementData
+{
+    required string Id = 1; //成就id
+    required int32 Index = 2; //成就步长
+    required int32 Status = 3; //成就状态 0：锁定  1：解锁  2：完成
+    required int32 Store = 4; //成就所需物品的当前存储量
+}
+
+//科技信息
+message TechInfo
+{
+    required int32 TechKey = 1;//科技tech_key
+    required int32 TechLevel = 2;//科技等级
+}
+
+//兵种信息
+message SoldersInfo
+{
+    required int32 SolderId = 1;//兵种id
+    required int32 SolderLevel = 2;//士兵数量
+}
+
+//pvp主动技能信息
+message SkillsInfo
+{
+    required int32 SkillId = 1;//技能id
+}
+
+
+// PVP 团队信息
+message PVPTeamInfo
+{
+    required int32 PlayerID         = 1;
+    required int32 TeamID           = 2;
+    required int32 RobotType        = 3;
+}
+
+
+// PVP 结算时信息
+message RoomEndInfoType
+{
+    repeated int32 PlayerID     = 1;
+    repeated int32 PlayerStat   = 2;    // EnmPlayerStat
+    repeated int32 Power        = 3;    // 玩家匹配成功时体力
+}
+
+
+// client 确认收到 server notify CS_NOTIFY_CLIENT_REPLY
+message CSNotifyClientReply
+{
+
+}
+
+//VIP信息
+message PlayerVipList
+{
+    optional int32 SuperVipTime = 1;// 1:SuperVip过期时间
+    optional int32 VipTime = 2;     // 2:Vip过期时间
+    repeated VipChgInfo VipChg = 3; // VIP的变化信息
+}
+
+//VIP的变化信息
+message VipChgInfo
+{
+    optional int32 VipType = 1;// VIP类型
+    optional int32 ChgTime = 2;// VIP变化时间点
+}
+
+//防御单元
+message PlayerUnit
+{
+    optional int32 Type     = 1;
+    //optional int32 Num      = 2;
+    optional int32 Level    = 2;
+}
+
+//卡牌信息
+message PlayerCard
+{
+    optional int32 Id         = 1;
+    optional int32 Number     = 2;
+}
+
+// pvp获取战备数据
+message PVPBattleReportPlayers
+{
+    optional uint64 RoomID = 1;
+}

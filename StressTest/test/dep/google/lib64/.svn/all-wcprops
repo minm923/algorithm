@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/tw/!svn/ver/35070/proj_server/trunk/dep/google/lib64
+END
+libprotobuf-lite.a
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/tw/!svn/ver/35070/proj_server/trunk/dep/google/lib64/libprotobuf-lite.a
+END
+libprotobuf.a
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/tw/!svn/ver/35070/proj_server/trunk/dep/google/lib64/libprotobuf.a
+END

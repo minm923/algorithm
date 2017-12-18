@@ -1,0 +1,1577 @@
+syntax = "proto2";
+
+package cs;
+
+enum EnmCmdID
+{
+    // PVP 推送关键帧
+    CS_LSFRAME_PUSH = 0;
+
+    // PHP 请求
+    CS_PHP_REQ = 1;
+    // PHP 回复
+    CS_PHP_RES = 2;
+
+    // 获取负载最轻的 gamesvr 请求
+    CS_GET_GAME_SVR_MIN_LOAD_REQ = 3;
+    // 获取负载最轻的 gamesvr 回复
+    CS_GET_GAME_SVR_MIN_LOAD_RES = 4;
+
+    // 心跳请求
+    CS_HEARTBEAT_REQ = 5;
+    // 心跳回复
+    CS_HEARTBEAT_RES = 6;
+
+    // 客户端主动获取秘钥请求
+    CS_UPDATE_SECRET_KEY_REQ = 7;
+    // 客户端主动获取秘钥回复
+    CS_UPDATE_SECRET_KEY_RES = 8;
+
+    // 玩家下线
+    CS_KICK_OFF_NOTIFY = 9;
+
+    // ping包请求
+    CS_PING_REQ = 11;
+    // ping包回复
+    CS_PING_RES = 12;
+
+    // 统计日志上报
+    CS_STAT_LOG_REQ = 13;
+    CS_STAT_LOG_RES = 14;
+
+    // PVP 统计上报
+    CS_PVP_STAT_REQ = 15;
+    CS_PVP_STAT_RES = 16;
+
+    //--10000-20000 为pb业务逻辑协议内容
+    //----测试等等
+    //------test hello协议请求与回复
+    CS_TEST_HELLO_REQ = 10005;
+    CS_TEST_HELLO_RES = 10006;
+
+    //----登陆与初始化10101-10200
+    CS_LOGIN_REQ = 10101;//登陆协议
+    CS_LOGIN_RES = 10102;
+    CS_FINALIZE_ACCOUNT_REQ = 10103;//创建角色
+    CS_FINALIZE_ACCOUNT_RES = 10104;
+    CS_RELOGIN_REQ = 10105;//重新登陆协议
+    CS_RELOGIN_RES = 10106;
+    CS_REEDEM_CODE_REQ = 10107;//兑换码请求
+    CS_REEDEM_CODE_RES = 10108;
+    CS_BOOT_REQ = 10109;//boot协议
+    CS_BOOT_RES = 10110;
+    
+    CS_GET_RANDOM_NAME_REQ = 10111;
+    CS_GET_RANDOM_NAME_RES = 10112;                    
+    CS_CHANGE_NAME_REQ    = 10113;
+    CS_CHANGE_NAME_RES    = 10114;
+
+    //----基础信息10201-10300
+    CS_GET_BASEINFO_REQ = 10201; //------拉取用户基础信息
+    CS_GET_BASEINFO_RES = 10202;
+    //------用户键值对数据存储
+    CS_SETDATA_REQ = 10203;
+    CS_SETDATA_RES = 10204;
+    CS_GETDATA_REQ = 10205;
+    CS_GETDATA_RES = 10206;
+    CS_CHANGE_PLAYER_HEAD_REQ = 10207; //------更换头像
+    CS_CHANGE_PLAYER_HEAD_RES = 10208;
+
+    // 获取已解锁兵种/技能卡牌
+    CS_GET_UNLOCK_CARD_REQ = 10209;
+    CS_GET_UNLOCK_CARD_RES = 10210;
+
+    // 拉取头像信息界面
+    CS_GET_PLAYER_BASE_DATA_REQ = 10211;
+    CS_GET_PLAYER_BASE_DATA_RES = 10212;
+
+    //----排行榜相关10301-10400
+    CS_PULL_MY_RANK_LIST_REQ = 10301;//获取我的排行榜
+    CS_PULL_MY_RANK_LIST_RES = 10302;
+    CS_PULL_TOP_RANK_LIST_REQ = 10303;//获取顶级排行
+    CS_PULL_TOP_RANK_LIST_RES = 10304;
+    CS_PVE_POINTS_LIST_REQ = 10305;//新版获取pve排行榜
+    CS_PVE_POINTS_LIST_RES = 10306;
+    CS_PVP_POINTS_LIST_REQ = 10307;//新版pvp排行榜
+    CS_PVP_POINTS_LIST_RES = 10308;
+    CS_3V3_POINTS_LIST_REQ = 10309;//3v3排行榜
+    CS_3V3_POINTS_LIST_RES = 10310;
+
+    // 新版 PVP 连胜榜
+    CS_WIN_STREAK_PVP_LIST_REQ = 10311;
+    CS_WIN_STREAK_PVP_LIST_RES = 10312;
+
+    // 新版 3V3 连胜榜
+    CS_WIN_STREAK_3V3_LIST_REQ = 10313;
+    CS_WIN_STREAK_3V3_LIST_RES = 10314;
+
+
+    //----建筑相关10401-10450
+    CS_GET_BUILDINGS_INFO_REQ = 10401;//获取建筑信息
+    CS_GET_BUILDINGS_INFO_RES = 10402;
+    CS_COLLECT_REQ = 10403;//收集金币
+    CS_COLLECT_RES = 10404;
+    CS_GET_BUILDING_STATUS_REQ = 10405;//获取建筑状态
+    CS_GET_BUILDING_STATUS_RES = 10406;
+    CS_BUILDING_UPGRADE_REQ = 10407;//建筑升级
+    CS_BUILDING_UPGRADE_RES = 10408;
+    CS_BUILDING_BOOST_REQ = 10409;//建筑减速
+    CS_BUILDING_BOOST_RES = 10410;
+    CS_BUILDING_UPGRADE_DMD_REQ = 10411;//建筑钻石升级
+    CS_BUILDING_UPGRADE_DMD_RES = 10412;
+
+    //----公会BOSS战相关10451-10500
+    CS_LEGION_WAR_INFO_REQ = 10451;
+    CS_LEGION_WAR_INFO_RES = 10452;
+    CS_LEGION_WAR_DETAIL_INFO_REQ = 10453;
+    CS_LEGION_WAR_DETAIL_INFO_RES = 10454;
+    CS_LEGION_WAR_END_REQ = 10455;
+    CS_LEGION_WAR_END_RES = 10456;
+
+    //攻防单元
+    CS_GET_BATTLE_UNIT_INFO_REQ = 10509;
+    CS_GET_BATTLE_UNIT_INFO_RES = 10510;
+    CS_UNLOCK_BATTLE_UNIT_REQ = 10511;
+    CS_UNLOCK_BATTLE_UNIT_RES = 10512;
+    CS_UPGRADE_BATTLE_UNIT_REQ = 10513;
+    CS_UPGRADE_BATTLE_UNIT_RES = 10514;
+
+    //地块相关
+    CS_GET_CREATION_AREA_INFO_REQ = 10515;
+    CS_GET_CREATION_AREA_INFO_RES = 10516;
+    CS_GET_DEFENCE_INFO_REQ = 10517;
+    CS_GET_DEFENCE_INFO_RES = 10518;
+    CS_UNLOCK_AREA_DIFFCULTY_REQ = 10519;
+    CS_UNLOCK_AREA_DIFFCULTY_RES = 10520;
+    CS_UNLOCK_AREA_AI_REQ = 10521;
+    CS_UNLOCK_AREA_AI_RES = 10522;
+    CS_CHANGE_AREA_REQ = 10523;
+    CS_CHANGE_AREA_RES = 10524;
+    CS_GET_SINGLE_AREA_INFO_REQ = 10525;
+    CS_GET_SINGLE_AREA_INFO_RES = 10526;
+    CS_GET_DEFENCE_UNIT_INFO_REQ = 10527;//获取所有防御单元
+    CS_GET_DEFENCE_UNIT_INFO_RES = 10528;
+    CS_UNLOCK_ALL_DIFFCULTY_REQ = 10529;
+    CS_UNLOCK_ALL_DIFFCULTY_RES = 10530;
+
+    //----战斗相关10601-10700
+    CS_GET_DEFENCE_LAYOUT_REQ = 10601;//拉取防御设施
+    CS_GET_DEFENCE_LAYOUT_RES = 10602;
+    CS_SET_DEFENCE_LAYOUT_REQ = 10603;//布置防御设施
+    CS_SET_DEFENCE_LAYOUT_RES = 10604;
+    CS_START_ATTACK_REQ = 10605;//------开始战斗
+    CS_START_ATTACK_RES = 10606;
+    CS_BATTLE_AWARD_REQ = 10607;//战斗结算
+    CS_BATTLE_AWARD_RES = 10608;
+    CS_PLAYER_DEFENCE_LAYOUT_REQ = 10609;//获取玩家的防御布置列表
+    CS_PLAYER_DEFENCE_LAYOUT_RES = 10610;
+    CS_BATTLE_REPORT_REQ = 10611;//获取战报信息请求
+    CS_BATTLE_REPORT_RES = 10612;
+    CS_PREVIEW_PLAYER_REQ = 10615;//预览对方的主界面，获取对方的信息
+    CS_PREVIEW_PLAYER_RES = 10616;
+    CS_BATTLE_REVENGE_REQ = 10617;//战报复仇请求
+    CS_BATTLE_REVENGE_RES = 10618;
+    CS_PULL_BATTLE_PREVIEW_INFO_REQ = 10619;//拉取战斗预览信息
+    CS_PULL_BATTLE_PREVIEW_INFO_RES = 10620;
+    CS_START_LAND_REQ = 10621;//开始降落
+    CS_START_LAND_RES = 10622;
+    CS_BATTLE_CHECK_DOWNLOAD_REQ = 10623;//战斗回放请求包
+    CS_BATTLE_CHECK_DOWNLOAD_RES = 10624;
+    CS_INFO_UPDATE_REQ = 10625;//获取消息更新状态
+    CS_INFO_UPDATE_RES = 10626;
+    CS_SAVE_BATTLE_CARD_REQ = 10627;//保存卡牌信息
+    CS_SAVE_BATTLE_CARD_RES = 10628;
+
+    CS_ATTACK_NOTIFY_REQ = 11629;//玩家在线被攻击通知
+    CS_ATTACK_NOTIFY_RES = 11630;
+    CS_GET_AREA_UNLOCK_ROBOT_REQ = 11631;//解锁战
+    CS_GET_AREA_UNLOCK_ROBOT_RES = 11632;
+    //----成就任务10701-10800
+    CS_PUSH_ACHIEVEMENT_REQ = 10701;//上报成就
+    CS_PUSH_ACHIEVEMENT_RES = 10702;
+    CS_COMPLETET_ACHIEVEMENT_REQ = 10703;//完成成就
+    CS_COMPLETET_ACHIEVEMENT_RES = 10704;
+    CS_GET_QUESTLIST_REQ = 10705;//拉取任务信息
+    CS_GET_QUESTLIST_RES = 10706;
+    CS_PUSH_QUESTDATA_REQ = 10707;//上报任务信息
+    CS_PUSH_QUESTDATA_RES = 10708;
+    CS_GET_QUESTREWARD_REQ = 10709;//领取任务奖励
+    CS_GET_QUESTREWARD_RES = 10710;
+    CS_GET_ACHIEVEMENT_LIST_REQ = 10711;//拉取成就列表
+    CS_GET_ACHIEVEMENT_LIST_RES = 10712;
+    CS_GET_ACTIVEREWARD_REQ = 10713;//领取日活跃奖励
+    CS_GET_ACTIVEREWARD_RES = 10714;//领取日活跃奖励
+
+    //PVP技能 10801 - 10900
+    CS_GET_PVP_SKILL_INFO_REQ = 10801;
+    CS_GET_PVP_SKILL_INFO_RES = 10802;
+    CS_UPGRADE_PVP_SKILL_REQ = 10803;
+    CS_UPGRADE_PVP_SKILL_RES = 10804;
+
+    //----公会相关10901 - 11000
+
+    CS_ALLIANCE_APPLY_PUSH  = 10901;     // 军团申请推送(PushMsgType的body没有数据)
+    CS_ALLIANCE_HANDLE_PUSH = 10902;     // 同意申请人申请的推送(PushMsgType的body有数据)
+    CS_ALLIANCE_KICK_PUSH   = 10923;     // 踢出军团成员的推送(PushMsgType的body没有数据)
+    CS_ALLIANCE_UPDATE_PUSH = 10924;     // 更新军团信息推送(PushMsgType的body没有数据)
+    CS_ALLIANCE_MEMBERS_UPDATE_PUSH = 10929;  // 军团在线成员数变更推送
+    CS_ALLIANCE_LOG_PUSH = 10930;// 军团日志推送
+    CS_SHARE_ROOM_TO_ALLIANCE_PUSH = 10931;// 分享房间到军团推送
+    CS_SHARE_ROOM_TO_ALLIANCE_STATUS_PUSH = 10932; // 分享链接状态变更 
+
+    // 创建军团
+    CS_ALLIANCE_CREATE_REQ = 10903;
+    CS_ALLIANCE_CREATE_RES = 10904;
+
+    // 根据名字搜索军团
+    CS_ALLIANCE_SEARCH_BY_NAME_REQ = 10905;
+    CS_ALLIANCE_SEARCH_BY_NAME_RES = 10906;
+
+    // 根据 allianceId 加入军团
+    CS_ALLIANCE_JOIN_REQ = 10907;
+    CS_ALLIANCE_JOIN_RES = 10908;
+
+    // 退出军团
+    CS_ALLIANCE_QUIT_REQ = 10909;
+    CS_ALLIANCE_QUIT_RES = 10910;
+
+    // 踢人
+    CS_ALLIANCE_KICK_REQ = 10911;
+    CS_ALLIANCE_KICK_RES = 10912;
+
+    // 修改成员职位：参谋、团长、普通
+    CS_ALLIANCE_CHG_MEMBER_REQ = 10913;
+    CS_ALLIANCE_CHG_MEMBER_RES = 10914;
+
+    // 推荐军团
+    CS_ALLIANCE_RECOMMEND_REQ = 10915;
+    CS_ALLIANCE_RECOMMEND_RES = 10916;
+
+    //获得军团信息
+    CS_ALLIANCE_INFO_REQ = 10917;
+    CS_ALLIANCE_INFO_RES = 10918;
+
+    //军官管理人员处理请求
+    CS_ALLIANCE_HANDLE_APPLY_REQ = 10919;
+    CS_ALLIANCE_HANDLE_APPLY_RES = 10920;
+
+    //修改军团信息
+    CS_ALLIANCE_CHG_INFO_REQ = 10921;
+    CS_ALLIANCE_CHG_INFO_RES = 10922;
+
+    // 军团名称重复
+    CS_ALLIANCE_NAME_REPEATED_REQ = 10925;
+    CS_ALLIANCE_NAME_REPEATED_RES = 10926;
+
+    // 军团日志
+    CS_ALLIANCE_LOG_REQ = 10927;
+    CS_ALLIANCE_LOG_RES = 10928;
+
+    // 获得军团房间分享
+    CS_GET_ALLIANCE_ROOM_SHARE_REQ = 10933;
+    CS_GET_ALLIANCE_ROOM_SHARE_RES = 10934;
+
+    //----商城相关11101-11200
+    CS_SHOP_BUY_REQ = 11101;
+    CS_SHOP_BUY_RES = 11102;
+    CS_GET_BUY_DENFENCE_REQ = 11103;//购买防御单元获取
+    CS_GET_BUY_DENFENCE_RES = 11104;//返回ItemtypeId List
+    //pvp商城
+    CS_SHOPPVP_BUY_REQ = 11107;
+    CS_SHOPPVP_BUY_RES = 11108;
+    CS_SHOPPING_REQ = 11109;//新版本商城购买
+    CS_SHOPPING_RES = 11110;
+    CS_SHOP_GET_PANELS_REQ = 11111;//获取商城内商品
+    CS_SHOP_GET_PANELS_RES = 11112;//获取商城内商品
+    CS_SHOP_REFRESH_CARDS_REQ = 11113;// 手动刷新卡牌
+    CS_SHOP_REFRESH_CARDS_RES = 11114;
+
+    //----防御布置相关11201-11300
+    CS_SET_DEFENCE_INFO_REQ = 11201;
+    CS_SET_DEFENCE_INFO_RES = 11202;
+
+	//----引导相关11301-11400
+	CS_GUIDANCEMATCHTARGET_REQ = 11301;//引导匹配
+    CS_GUIDANCEMATCHTARGET_RES = 11302;
+    CS_MATCHTARGET_REQ = 11303;//正常匹配
+    CS_MATCHTARGET_RES = 11304;
+    CS_SET_GUIDANCEID_REQ = 11305;//设置引导步骤ID
+    CS_SET_GUIDANCEID_RES = 11306;
+    CS_GET_GUIDANCEID_REQ = 11307;//获取引导步骤ID
+    CS_GET_GUIDANCEID_RES = 11308;
+
+    // ---- PVP 11401 - 11500
+    CS_MATCH_PVP_REQ = 11401;
+    CS_MATCH_PVP_RES = 11402;
+
+    // PVP 开始PVP
+    CS_START_PVP_FIGHT_REQ = 11403;
+    CS_START_PVP_FIGHT_RES = 11404;
+
+    // PVP Ready 请求
+    CS_READY_PVP_REQ = 11405;
+    CS_READY_PVP_RES = 11406;
+
+	// PVP 查询玩家状态
+    CS_QUERY_PVP_STATUS_REQ = 11407;
+    CS_QUERY_PVP_STATUS_RES = 11408;
+
+    // PVP 发送命令
+    CS_CMD_PVP_REQ = 11409;
+    CS_CMD_PVP_RES = 11410;
+
+    // PVP 结算
+    CS_PVP_END_REQ = 11411;
+    CS_PVP_END_RES = 11412;
+
+    // 获得指定帧
+    CS_GET_FRAME_REQ = 11413;
+    CS_GET_FRAME_RES = 11414;
+
+    // 取消匹配
+    CS_CANCEL_MATCH_REQ = 11415;
+    CS_CANCEL_MATCH_RES = 11416;
+
+
+    // PVP 推送匹配成功
+    CS_MATCH_PVP_PUSH = 11420;
+    CS_READY_PVP_PUSH = 11421;
+    CS_NOTIFY_CLIENT_REPLY = 11422;
+
+    // PVP 匹配前拉取玩家数据
+    CS_PVP_GET_PLAYER_DATA_REQ = 11425;
+    CS_PVP_GET_PLAYER_DATA_RES = 11426;
+
+    //拉取玩家积分榜
+    CS_PULL_PVP_POINTS_LIST_REQ = 11427;
+    CS_PULL_PVP_POINTS_LIST_RES = 11428;
+
+    //拉取PVP胜率榜
+    CS_PULL_WIN_PERCENT_LIST_REQ = 11429;
+    CS_PULL_WIN_PERCENT_LIST_RES = 11430;
+
+    //拉取PVP连胜榜
+    CS_PULL_WIN_STREAK_LIST_REQ = 11431;
+    CS_PULL_WIN_STREAK_LIST_RES = 11432;
+
+	// 获取对方加载进度
+    CS_GET_TO_PLAYER_LOAD_PROC_REQ = 11433;
+    CS_GET_TO_PLAYER_LOAD_PROC_RES = 11434;
+
+    // 获取PVP战报信息
+    CS_GET_PVP_BATTLE_INFO_REQ = 11435;
+    CS_GET_PVP_BATTLE_INFO_RES = 11436;
+
+    // 获取PVP战报下载地址
+    CS_GET_PVP_DOWN_ADDR_REQ = 11437;
+    CS_GET_PVP_DOWN_ADDR_RES = 11438;
+
+    // 获取PVP战报列表
+    CS_PVP_BATTLE_REPORT_LIST_REQ = 11439;
+    CS_PVP_BATTLE_REPORT_LIST_RES = 11440;
+    
+    //获取战报详情
+    CS_PVP_BATTLE_REPORT_DETAIL_REQ = 11441;
+    CS_PVP_BATTLE_REPORT_DETAIL_RES = 11442;
+
+    //分享战报
+    CS_SET_SHARE_BATTLE_REPORT_REQ = 11443;
+    CS_SET_SHARE_BATTLE_REPORT_RES = 11444;
+
+    //获得分享请求
+    CS_GET_SHARE_BATTLE_REPORT_REQ = 11445;
+    CS_GET_SHARE_BATTLE_REPORT_RES = 11446;
+
+    //获得军团分享战报详情
+    CS_GET_ALLIANCE_SHARE_BATTLE_REPORT_REQ = 11447;
+    CS_GET_ALLIANCE_SHARE_BATTLE_REPORT_RES = 11448;
+
+    //分享房间到军团
+    CS_SHARE_ROOM_TO_ALLIANCE_REQ = 11449;
+    CS_SHARE_ROOM_TO_ALLIANCE_RES = 11450;
+
+
+    // 上报帧hash
+    CS_REPORT_FRAME_HASH_REQ = 11489;
+    CS_REPORT_FRAME_HASH_RES = 11490;
+
+    // 上报PVP信息
+    CS_REPORT_PVP_INFO_REQ = 11491;
+    CS_REPORT_PVP_INFO_RES = 11492;
+
+    // GVG 结算
+    CS_GVG_END_REQ = 11493;
+    CS_GVG_END_RES = 11494;
+
+    // PVP处于开放
+    CS_PVP_OPEN_REQ = 11495;
+    CS_PVP_OPEN_RES = 11496;
+
+    // PVP 拒绝加入上一场战斗
+    CS_PVP_REJECT_LAST_REQ = 11497;
+    CS_PVP_REJECT_LAST_RES = 11498;
+
+    // 获取重新进入 PVP 条件
+    CS_GET_PVP_COND_REQ = 11499;
+    CS_GET_PVP_COND_RES = 11500;
+
+    //体力相关 11501 - 11600
+    CS_GET_POWER_INFO_REQ = 11501;
+    CS_GET_POWER_INFO_RES = 11502;
+
+    CS_BUY_POWER_REQ = 11503;
+    CS_BUY_POWER_RES = 11504;
+
+    //----- 推送消息相关 11601 - 11700
+    // 推送有新消息状态
+    CS_CHAT_STATUS_PUSH = 11601;
+    CS_MSG_PUSH = 11602;
+
+    // 聊天请求
+    CS_CHAT_REQ = 11603;
+    CS_CHAT_RES = 11604;
+
+    // 拉取聊天消息
+    CS_PULL_CHAT_REQ = 11605;
+    CS_PULL_CHAT_RES = 11606;
+
+    // 聊天消息推送
+    CS_CHAT_NOTIFY = 11607;
+
+
+    // 11701 - 11800
+    // 获取 robot 数据
+    GET_ROBOT_INFO_REQ = 11701;
+    GET_ROBOT_INFO_RES = 11702;
+
+    // 设置 robot 数据
+    SET_ROBOT_INFO_REQ = 11703;
+    SET_ROBOT_INFO_RES = 11704;
+
+    // 生成/更新 robot
+    GEN_ROBOT_REQ = 11705;
+    GEN_ROBOT_RES = 11706;
+
+    // GM指令
+    GM_DEBUG_REQ = 11707;
+    GM_DEBUG_RES = 11708;
+
+
+    //-------居民系统相关 11801 - 11900
+    CS_GET_INHABITANT_EVENT_LIST_REQ = 11801;//拉取居民事件信息
+    CS_GET_INHABITANT_EVENT_LIST_RES = 11802;
+
+    CS_ACTIVE_EVENT_REQ = 11803;//居民事件激活
+    CS_ACTIVE_EVENT_RES = 11804;
+
+    CS_INHABITANT_MISSION_AWARD_REQ = 11805;//居民任务奖励
+    CS_INHABITANT_MISSION_AWARD_RES = 11806;
+
+    CS_CHANGE_TO_MISSION_REQ = 11807;//居民事件转化
+    CS_CHANGE_TO_MISSION_RES = 11808;
+
+    CS_GET_QAINFO_REQ = 11899;//问卷协议
+    CS_GET_QAINFO_RES = 11900;
+
+
+    //VIP相关11901-12000
+    //拉取VIP奖励信息
+    CS_GET_VIP_INFO_REQ = 11901;
+    CS_GET_VIP_INFO_RES = 11902;
+    //领取VIP奖励
+    CS_GET_VIP_AWARD_REQ = 11903;
+    CS_GET_VIP_AWARD_RES = 11904;
+    //购买VIP礼包
+    CS_BUY_VIP_GIFT_BAG_REQ = 11905;
+    CS_BUY_VIP_GIFT_BAG_RES = 11906;
+
+
+    // udpsvr 相关 12001 - 12100
+
+    // 获取udpsvr信息
+    CS_GET_UDP_INFO_REQ = 12001;
+    CS_GET_UDP_INFO_RES = 12002;
+
+    // 创建kcp
+    CS_CREATE_KCP_REQ = 12003;
+    CS_CREATE_KCP_RES = 12004;
+
+    // login udpsvr
+    CS_LOGIN_UDP_REQ = 12005;
+    CS_LOGIN_UDP_RES = 12006;
+
+    // relogin udpsvr
+    CS_RELOGIN_UDP_REQ = 12007;
+    CS_RELOGIN_UDP_RES = 12008;
+
+    // udp 心跳包
+    CS_UDP_HEARTBEAT_REQ = 12009;
+    CS_UDP_HEARTBEAT_RES = 12010;
+
+    // logout udpsvr
+    CS_LOGOUT_UDP_REQ = 12011;
+    CS_LOGOUT_UDP_RES = 12012;
+
+
+    //----推送消息 12101 - 12200
+    CS_BASEINFO_PUSH    = 12101;		// 推送玩家基础信息
+    CS_STATUS_PUSH      = 12102;		// 推送游戏状态改变
+    CS_UPDATE_VERSION_PUSH  = 12103;    // 推送游戏更新版本/资源
+    CS_ALLIANCE_SHARE_PUSH  = 12104;    // 军团分享推送
+    CS_TEAM_PLAYER_INFO_PUSH = 12105;   // 3V3组队和开房间人员变化推送
+    CS_CHANGE_ROOM_POSITION_PUSH = 12106; // 玩家改变房间位置推送
+    CS_REFUSE_CHANGE_ROOM_POSITION_PUSH = 12107;// 玩家拒绝交换房间位置推送
+    CS_ALLIANCE_MEMBER_INFO_PUSH = 12108;// 改变玩家成员信息推送
+
+
+    //活动相关12201 - 12300
+    CS_GET_QA_INFO_REQ = 12201;
+    CS_GET_QA_INFO_RES = 12202;
+    CS_GET_ACTIVITY_INFO_REQ = 12203;
+    CS_GET_ACTIVITY_INFO_RES = 12204;
+    CS_GET_ACTIVITY_AWARD_REQ = 12205;
+    CS_GET_ACTIVITY_AWARD_RES = 12206;
+    //登录后获取公告信息
+    CS_GET_NOTICE_INFO_REQ = 12207;
+    CS_GET_NOTICE_INFO_RES = 12208;
+
+
+    //宝箱相关12301 - 12400
+    CS_GET_TREASURE_BOX_REQ = 12301;
+    CS_GET_TREASURE_BOX_RES = 12302;
+
+    CS_GET_COLLECT_TREASURE_BOX_REQ = 12303;
+    CS_GET_COLLECT_TREASURE_BOX_RES = 12304;
+
+    CS_COLLECT_TOWER_BOX_REQ = 12305;
+    CS_COLLECT_TOWER_BOX_RES = 12306;
+
+
+    //军团友谊战相关12401 - 12500
+
+    //军团友谊战邀请
+    CS_ALLIANCE_INVITE_PVP_REQ = 12401;
+    CS_ALLIANCE_INVITE_PVP_RES = 12402;
+
+    //军团友谊战取消
+    CS_CANCEL_INVITE_REQ = 12403;
+    CS_CANCEL_INVITE_RES = 12404;
+
+    //参加军团友谊战
+    CS_JOIN_ALLIANCE_PVP_REQ = 12405;
+    CS_JOIN_ALLIANCE_PVP_RES = 12406;
+
+    //推送军团友谊战消息
+    CS_ALLIANCE_PVP_PUSH = 12407;
+
+    //查询军团友谊战状态
+    CS_QUERY_ALLIANCE_PVP_STATUS_REQ = 12408;
+    CS_QUERY_ALLIANCE_PVP_STATUS_RES = 12409;
+
+    //军团友谊战3V3修改位置
+    CS_CHANGE_ALLIANCE_GVG_POSITION_REQ = 12410;
+    CS_CHANGE_ALLIANCE_GVG_POSITION_RES = 12411;
+
+    //队长开始军团3V3友谊战
+    CS_START_ALLIANCE_GVG_REQ = 12412;
+    CS_START_ALLIANCE_GVG_RES = 12413;
+
+    //获得军团友谊战
+    CS_GET_ALLIANCE_PVP_REQ = 12414;
+    CS_GET_ALLIANCE_PVP_RES = 12415;
+
+
+    // GVG组队相关 12501 - 12600
+    // 队长组队邀请
+    CS_TEAM_INVITE_REQ = 12501;
+    CS_TEAM_INVITE_RES = 12502;
+
+    // 队员组队接受
+    CS_TEAM_ACCEPT_REQ = 12503;
+    CS_TEAM_ACCEPT_RES = 12504;
+
+    // 组队查询
+    CS_TEAM_QUERY_REQ = 12505;
+    CS_TEAM_QUERY_RES = 12506;
+
+    // 队长组队取消匹配
+    CS_TEAM_CANCEL_MATCH_REQ = 12507;
+    CS_TEAM_CANCEL_MATCH_RES = 12508;
+
+    // 组队退出, 队长退出则解散队伍
+    CS_TEAM_QUIT_REQ = 12509;
+    CS_TEAM_QUIT_RES = 12510;
+
+    // 获取军团/好友状态
+    CS_GET_RELATE_PLAYER_STAT_REQ = 12511;
+    CS_GET_RELATE_PLAYER_STAT_RES = 12512;
+
+    // 队员组队拒绝
+    CS_TEAM_REFUSE_REQ = 12513;
+    CS_TEAM_REFUSE_RES = 12514;
+
+    // 组队邀请推送
+    CS_TEAM_INVITE_PUSH = 12520;
+
+    // 组队拒绝推送
+    CS_TEAM_REFUSE_PUSH = 12521;
+
+    // PVP 人机开始请求
+    CS_MACHINE_START_REQ = 12523;
+    // PVP 人机开始回复
+    CS_MACHINE_START_RES = 12524;
+
+    // pvp人机结算
+    CS_MACHINE_SETTLEMENT_REQ = 12525;
+    CS_MACHINE_SETTLEMENT_RES = 12526;
+
+    // pvp战备查询
+    CS_PVP_BATTLE_REPORT_QUERY_REQ = 12530;
+    CS_PVP_BATTLE_REPORT_QUERY_RES = 12531;
+
+    // pvp战备确定
+    CS_PVP_BATTLE_REPORT_DETERMINE_REQ = 12533;
+    CS_PVP_BATTLE_REPORT_DETERMINE_RES = 12534;
+
+    // PVP 组队创建
+    CS_TEAM_CREATE_REQ = 12535;
+    CS_TEAM_CREATE_RES = 12536;
+
+    // GVG开房间相关 12601 - 12700
+    CS_GET_RECENT_PLAYER_STAT_REQ = 12601;
+    CS_GET_RECENT_PLAYER_STAT_RES = 12602;
+
+    CS_CHANGE_ROOM_POSITION_REQ = 12603;
+    CS_CHANGE_ROOM_POSITION_RES = 12604;
+
+    CS_SET_ROOM_READY_STATUS_REQ = 12605;
+    CS_SET_ROOM_READY_STATUS_RES = 12606;
+
+    CS_KICK_ROOM_PLAYER_REQ = 12607;
+    CS_KICK_ROOM_PLAYER_RES = 12608;
+
+    CS_CANCEL_ROOM_REQ = 12609;
+    CS_CANCEL_ROOM_RES = 12610;
+
+    CS_ADD_ROOM_ROBOT_REQ = 12611;
+    CS_ADD_ROOM_ROBOT_RES = 12612;
+
+    CS_ACCEPT_CHANGE_ROOM_POSITION_REQ = 12613;
+    CS_ACCEPT_CHANGE_ROOM_POSITION_RES = 12614;
+
+    CS_REFUSE_CHANGE_ROOM_POSITION_REQ = 12615;
+    CS_REFUSE_CHANGE_ROOM_POSITION_RES = 12616;
+
+    //副本相关
+    CS_GET_ALL_MISSION_INFO_REQ = 13001;
+    CS_GET_ALL_MISSION_INFO_RES = 13002;
+    CS_OPEN_MISSION_BOX_REQ = 13003;
+    CS_OPEN_MISSION_BOX_RES = 13004;
+    CS_MISSION_START_REQ = 13005;
+    CS_MISSION_START_RES = 13006;
+    CS_MISSION_REWARD_REQ = 13007;
+    CS_MISSION_REWARD_RES = 13008;
+    CS_MISSION_CLEARANCE_REQ = 13009;
+    CS_MISSION_CLEARANCE_RES = 13010;
+
+    //获取备战数据
+    CS_GET_BATTLE_CARD_DATA_REQ = 13011;
+    CS_GET_BATTLE_CARD_DATA_RES = 13012;
+
+    CS_GET_BATTLE_INFO_REQ = 13013;
+    CS_GET_BATTLE_INFO_RES = 13014;
+    CS_MISSION_BATTLE_REWARD_REQ = 13015;
+    CS_MISSION_BATTLE_REWARD_RES = 13016;
+
+    //每日在线礼包数据请求
+    CS_DAY_ONLINE_GIFT_DATA_REQ = 13020;
+    CS_DAY_ONLINE_GIFT_DATA_RES = 13021;
+
+    //每日在线礼包领取
+    CS_DAY_ONLINE_GIFT_RECEIVE_REQ = 13022;
+    CS_DAY_ONLINE_GIFT_RECEIVE_RES = 13023;
+
+    //举报
+    CS_REPORT_ACCUSATION_REQ = 13031;
+    CS_REPORT_ACCUSATION_RES = 13032;
+
+    //拉取关注列表
+    CS_PULL_FOLLOW_LIST_REQ = 13033;
+    CS_PULL_FOLLOW_LIST_RES = 13034;
+
+    //拉取粉丝列表
+    CS_PULL_FANS_LIST_REQ = 13035;
+    CS_PULL_FANS_LIST_RES = 13036;
+
+    //拉取粉丝列表
+    CS_PULL_BLACK_LIST_REQ = 13037;
+    CS_PULL_BLACK_LIST_RES = 13038;
+
+    //查找玩家
+    CS_FIND_PLAYER_REQ = 13039;
+    CS_FIND_PLAYER_RES = 13040;
+
+    //查找关注、粉丝、黑名单列表中某个玩家
+    CS_FIND_LIST_PLAYER_REQ = 13041;
+    CS_FIND_LIST_PLAYER_RES = 13042;
+
+    //删除关注、粉丝、黑名单列表中某个玩家
+    CS_DELETE_LIST_PLAYER_REQ = 13043;
+    CS_DELETE_LIST_PLAYER_RES = 13044;
+
+    //根据类型添加(关注、拉黑)某个玩家
+    CS_ADD_PLAYER_BY_TYPE_REQ = 13045;
+    CS_ADD_PLAYER_BY_TYPE_RES = 13046;
+
+    //通知某个玩家有新粉丝
+    CS_NOTICE_NEW_FANS = 13047;
+
+    //拉取好友基础数据
+    CS_PULL_FRIEND_BASE_REQ = 13048;
+    CS_PULL_FRIEND_BASE_RES = 13049;
+
+    //关注、聊天列表聊天
+    CS_FRIEND_CHAT_REQ = 13050;
+    CS_FRIEND_CHAT_RES = 13051;
+
+    //聊天通知对方
+    CS_FRIEND_CHAT_NOTICE = 13052;
+
+    //拉取聊天列表
+    CS_PULL_FRIEND_CHAT_LIST_REQ = 13053;
+    CS_PULL_FRIEND_CHAT_LIST_RES = 13054;
+
+    //其它模块拉取关注列表
+    CS_PULL_FOLLOW_LIST_FOR_OTHER_REQ = 13055;
+    CS_PULL_FOLLOW_LIST_FOR_OTHER_RES = 13056;
+
+    //通知被拉入黑名单
+    CS_NOTICE_BE_ADD_BLACK = 13057;
+
+    // 邮件系统 13101 - 13200
+
+    // 拉取邮件列表请求
+    CS_GET_MAIL_LIST_REQ = 13101;
+    // 拉取邮件列表回复
+    CS_GET_MAIL_LIST_RES = 13102;
+
+    // 查看邮件请求
+    CS_VIEW_MAIL_REQ = 13103;
+    // 查看邮件回复
+    CS_VIEW_MAIL_RES = 13104;
+
+    // 发送邮件请求
+    CS_SEND_MAIL_REQ = 13105;
+    // 发送邮件回复
+    CS_SEND_MAIL_RES = 13106;
+
+    // 删除邮件请求
+    CS_DEL_MAIL_REQ = 13107;
+    // 删除邮件回复
+    CS_DEL_MAIL_RES = 13108; 
+
+    // 领取邮件附件请求
+    CS_GET_MAIL_ATTACH_REQ = 13109;
+    // 领取邮件附件回复
+    CS_GET_MAIL_ATTACH_RES = 13110;
+
+    // 邮件推送
+    CS_MAIL_NOTIFY = 13111;
+
+    //全服邮件测试
+    CS_FULL_SERVICE_MAIL_TEST_REQ = 13112;
+    CS_FULL_SERVICE_MAIL_TEST_RES = 13113;
+    
+    //符文系统 13201 - 13300
+    CS_GET_ALL_RUNE_INFO_REQ = 13201;
+    CS_GET_ALL_RUNE_INFO_RES = 13202;
+    CS_CHANGE_RUNE_PAGE_INFO_REQ = 13203;
+    CS_CHANGE_RUNE_PAGE_INFO_RES = 13204;
+    CS_CHANGE_RUNE_PAGE_NAME_REQ = 13205;
+    CS_CHANGE_RUNE_PAGE_NAME_RES = 13206;
+    CS_UNLOCK_RUNE_PAGE_REQ = 13207;
+    CS_UNLOCK_RUNE_PAGE_RES = 13208;
+
+    //查看玩家数据 
+    CS_SEE_PLAYER_BASE_INFO_REQ = 13301;
+    CS_SEE_PLAYER_BASE_INFO_RES = 13302;
+
+    //获取玩家信誉记录
+    CS_PVP_CREDIT_RECORD_REQ = 13310; 
+    CS_PVP_CREDIT_RECORD_RES = 13311; 
+    //信誉发生变化
+    CS_PVP_NOTICE_CREDIT_ALTER = 13312;
+
+    //点赞
+    CS_WONPRAISE_REQ = 13321;
+    CS_WONPRAISE_RES = 13322;
+    //被点赞通知
+    CS_WONPRAISE_NOTIFY = 13323;
+	
+    // 训练营系统  13324-13340
+    //获取玩家训练营信息
+	CS_GET_TRAINING_INFO_REQ = 13324;
+    //获取玩家训练营信息回复
+	CS_GET_TRAINING_INFO_RES = 13325;
+    
+    //训练营开战请求
+	CS_TRAINING_START_REQ     = 13326;
+    //训练营开战回复
+	CS_TRAINING_START_RES	  = 13327;
+
+    //训练营胜利请求
+	CS_TRAINING_WIN_REQ		  = 13328;
+    //训练营胜利回复
+	CS_TRAINING_WIN_RES       = 13329;
+
+    CS_CHANGE_PVE_HARD_TYPE_REQ = 13341;
+    CS_CHANGE_PVE_HARD_TYPE_RES = 13342;
+}
+
+
+enum EnmCompressType
+{
+    ENM_COMPRESS_TYPE_NONE = 0;
+    ENM_COMPRESS_TYPE_ZLIB = 1;
+}
+
+enum EnmEncryptType
+{
+    // 不加密
+    ENM_ENCRYPT_TYPE_NONE = 0;
+
+    // XXTEA 加密算法
+    ENM_ENCRYPT_TYPE_XXTEA = 1;
+}
+
+// 游戏物品大类
+enum EnmGameItemType
+{
+	CURRENCY = 1001;	// 货币
+	CORPS = 1002;		// 兵种
+    EXP = 1003;         // 经验
+    INHABY = 1004;	// 居民
+}
+
+// 货币类型
+enum EnmCurrencyType
+{
+	GOLD = 101;			// 金币
+	DIAMOND = 102;		// 钻石
+    RMB = 103;//人民币
+    USD = 104;//美元
+}
+
+// 经验类型
+enum EnmExpType
+{
+	EXPE = 99;
+}
+
+// 居民类型
+enum EnmInhabyType
+{
+	INHABY_1 = 101;
+}
+
+// 兵种类型
+enum EnmCorpsType
+{
+	NONE = 0;						// 无
+
+    // 雇佣兵
+    SOLDIER = 101;                  // 士兵（炮灰）
+    BUILDING_ATTACK_SOLDIER = 102;  // 攻城士兵
+
+    BOMB_MAN = 261;                // 炸弹人
+	SIEGE_ENGINE = 263;            // 攻城车（PVP主动技能召唤）
+	BARRACK = 264;                 // 兵营（PVP主动技能召唤）
+	PVPTOWER = 267;                // 激光塔 (PVP专用)
+	PVPTOWER3 = 271;               // 3号炮塔(PVP专用)
+    MISSILETOWER = 269;            // 导弹塔
+    PRISMTOWER = 270;              // 光棱塔
+    FLYERBARRACK = 272;            // 飞艇基地  
+    PVEBASE = 273;                 // PVE基地
+    SANDBAG = 274;                 // 沙包
+	PVE_SANDBAG = 275;			   //pve沙包
+
+    // 防御部队
+    BOMB = 305;                    // 地雷
+    GEYSER = 306;                  // 喷泉
+    DALLE_TRAP = 310;              // 弹射版
+    TESLA = 313;                   // 特斯拉电塔
+
+    TURRET = 303;                  // 加农炮
+    MIDDLE_TURRET = 320;           // 中型加农炮
+    BIG_TURRET = 321;              // 大型加农炮
+    TANK = 301;                    // 坦克
+    MIDDLE_TANK = 322;             // 中型坦克
+    BIG_TANK = 323;                // 大型坦克
+    CANON = 304;                   // 轨道炮
+    MIDDLE_CANON = 324;            // 中型轨道炮
+    BIG_CANON = 325;               // 大型轨道炮
+	APOCALYPSE = 326;			   // 天启坦克
+
+    BUNKER = 302;                  // 地堡
+    SNIPER = 307;                  // 哨塔
+	MIDDLE_SNIPER = 352;            //中型哨塔
+    BIG_SNIPER = 353;               //大型哨塔
+    RUCHER = 308;                  // 机库
+    MIDDLE_RUCHE = 350;            //中型机库
+    BIG_RUCHE = 351;               //大型机库
+
+    TURTLE = 311;                  // 海龟
+    MIDDLE_TURTLE = 354;                  // 中型海龟
+    BIG_TURTLE = 355;                  // 大型海龟
+
+    ROTOTANK = 312;                // 螺旋坦克
+    MIDDLE_ROTOTANK = 356;                // 中型螺旋坦克
+    BIG_ROTOTANK = 357;                // 大型螺旋坦克
+
+    VAN = 314;                     // 装甲
+    MIDDLE_VAN = 358;                     // 中型装甲
+    BIG_VAN = 359;                     // 大型装甲
+
+
+    HELICOPTER = 316;              // 蜜蜂（由机库召唤）
+    GUARD = 315;                   // 警卫（对应以前SpecilaItem.Soldier
+	TRACER = 317;				   // 追踪者（由警卫召唤）
+	BUNKER_SOLDIER = 318;		   // 地堡士兵（由地堡召唤）
+
+	// 建筑
+	HEADQUATER = 401;			   // 大本营
+    CRYSTAL_Big = 402;              // 大水晶
+    CRYSTAL_Small = 403;            // 小水晶
+
+	// Boss
+	BOSS = 601;
+
+    // Boss战箱子
+    BOSSLootBox = 602;
+
+    MERCENARY_VERSION_MIN = 701;
+
+    // 雇佣兵（第一版需求）
+    MERCENARY_VERSION1_SOLDIER = 712;       // 小小兵
+    MERCENARY_VERSION1_CIRCELAOE = 713;     // 炸弹兵
+    MERCENARY_VERSION1_SECTORAOE = 714;     // 散弹兵
+    MERCENARY_VERSION1_GATLING = 715;       // 狙击兵
+    MERCENARY_VERSION1_SNIPER = 716;        // 神枪手
+
+    // 雇佣兵（第二版需求）
+    //MERCENARY_VERSION2_SECTORAOE2 = 717;
+    MERCENARY_VERSION2_LINEAOE = 718;       // 激光兵
+    MERCENARY_VERSION2_MISSLE = 719;        // 导弹兵
+    //MERCENARY_VERSION2_COUNTER2 = 720;
+
+    // 雇佣兵（第三版需求）
+    MERCENARY_VERSION3_SNEER = 721;
+    MERCENARY_VERSION3_FIVEBULLET = 722;    // 忍者
+    MERCENARY_VERSION3_MASTER = 723;
+
+    // 雇佣兵（第四版需求）
+    MERCENARY_VERSION4_FLYER_DANTI = 724;
+    MERCENARY_VERSION4_DRUM = 725;
+    MERCENARY_VERSION4_FLYER_CIRCLEAOE = 726;
+    MERCENARY_VERSION4_AGAINSTBUILDING = 727;
+    MERCENARY_VERSION4_ENERGYBUFF = 728;
+
+    // 雇佣兵（第五版需求）
+    MERCENARY_VERSION5_ENGINEER = 729;      // 工程师
+    MERCENARY_VERSION5_COMMANDER = 730;     // 指挥官
+    MERCENARY_VERSION5_DOCTOR = 731;        // 医疗兵
+
+    // 雇佣兵（第六版需求）
+    MERCENARY_VERSION6_LIFESHIELD = 732;    // 生命护盾兵
+    MERCENARY_VERSION6_FIREMAN = 733;       // 火焰兵
+    MERCENARY_VERSION6_ICEMAN = 734;        // 冰冻兵
+    MERCENARY_VERSION6_JIATELIN = 735;      // 加特林
+    MERCENARY_VERSION6_TIEJU = 736;         // 铁狙
+
+    // 雇佣兵（第七版需求）
+    MERCENARY_VERSION7_SPEARHOLDER = 737;   // 投矛手
+    MERCENARY_VERSION7_BOMBTHROWER = 738;   // 投弹手
+    MERCENARY_VERSION7_AXEHOLDER = 739;     // 斧头手
+    MERCENARY_VERSION7_SHOCKWAVE = 740;     // 冲击波    
+    MERCENARY_VERSION7_DOGTRAINER = 742;    // 训犬师
+    MERCENARY_VERSION7_ANTIRIOTMAN = 743;   // 防爆人
+
+    // 兵种 （一英雄带两兵种版本）
+    MERCENARY_VERSIONHERO_SOLDIER = 750;    // 小小兵
+    MERCENARY_VERSIONHERO_SNIPER = 751;     // 狙击兵
+    MERCENARY_VERSIONHERO_BOMB = 752;       // 手雷兵
+    MERCENARY_VERSIONHERO_FIREMAN = 753;    // 火焰兵
+    MERCENARY_VERSIONHERO_GATLIN = 754;     // 加特林
+    MERCENARY_VERSIONHERO_ANTIRIOTMAN = 755;// 镇暴兵
+
+    MERCENARY_VERSION7_DOG = 741;           // 战犬
+    MERCENARY_VERSIONHERO_SUMMON_SKYBOOM = 756;    // 热气球
+    MERCENARY_VERSIONHERO_NONAME1 = 757;    // 新兵种1
+    MERCENARY_VERSIONHERO_NONAME2 = 758;     // 新兵种2
+    MERCENARY_VERSIONHERO_NONAME3 = 759;    // 新兵种3
+    MERCENARY_VERSIONHERO_NONAME4 = 760;     // 新兵种4
+    MERCENARY_VERSIONHERO_NONAME5 = 761;     // 新兵种5
+    MERCENARY_VERSIONHERO_NONAME6 = 762;     // 新兵种6
+
+    MERCENARY_VERSIONHERO_HQS = 763;          // 火枪手
+
+    MERCENARY_VERSIONHERO_TOTEST = 798;    // 测试用兵种
+
+    MERCENARY_VERSION_MAX = 799;
+
+    // 英雄
+    HERO_MIN = 800;
+
+    HERO_MODEL = 801;       // 英雄模板
+    HERO_DOGTRAINER = 802;  // 训犬师
+    HERO_COMMANDER = 803;   // 指挥官
+    HERO_TRAPMAN = 804;     // 陷阱师
+    HERO_SHIELDGUNMAN = 805;// 盾炮手
+    HERO_HORNMAN = 806;     // 宣传官
+    HERO_REQIQIU = 807;     // 热气球
+    HERO_SEXAGENT = 808;    // 性感特务
+    HERO_NONAME1 = 809;     // 新英雄1
+    HERO_NONAME2 = 810;     // 新英雄2
+    HERO_NONAME3 = 811;     // 新英雄3
+    HERO_NONAME4 = 812;     // 新英雄4
+    
+    HERO_CFDZ = 813;        // 冲锋队长
+    HERO_HQDZ = 814;        // 火枪队长
+
+    HERO_MAX = 899;
+
+	//关卡boss
+	PVE_BOSS_WAR_BASS=901;	//Boss战争基地
+
+}
+
+// 兵种大类
+enum EnmCorpsGroup
+{
+    // 所有兵种
+    ALL = 101;
+
+    // 单体兵种
+    SINGLE_DAMAGE = 102;
+    // AOE兵种
+    AOE_DAMAGE = 103;
+    // 特殊兵种
+    SPECIAL = 104;
+    // 空中单位
+    FLYER = 105;
+    // 地面单位
+    GROUDER = 106;
+    // 防空单位
+    ANTI_FLYER = 107;
+    // 炮塔
+    TOWER = 108;
+    // 召唤物
+    SUMMON_CORP = 109;
+    // 炮灰
+    FODDER = 110;
+    // 嘲讽兵
+    TAUNT = 111;
+
+    // 防御单位
+    DEFENSE_CORP = 201;
+    // 加农炮
+    TURRET_CORP = 203;
+    // 轨道炮
+    CANON_CORP = 204;
+    // 坦克
+    TANK_CORP = 205;
+    // 哨塔
+    SNIPER_CORP = 206;
+    // 机库
+    HELICOPTER_CORP = 207;
+    // 海龟
+    TURTLE_CORP = 208;
+    // 螺旋坦克
+    ROTOTANK_CORP = 209;
+    // 装甲车
+    VAN_CORP = 210;
+    // 天启坦克
+    APOCALYPSE_CORP = 211;
+    // 小蜜蜂
+    RUCHE_CORP = 212;
+
+    // 所有炮塔类型
+    ALL_TOWER_CORP = 213;
+    // 所有坦克类型
+    ALL_TANK_CORP = 214;
+    // pvp坦克类型
+    PVP_TANK_CORP = 215;
+
+    // 地雷
+    MINE_CORP = 301;
+    // 喷泉
+    GEYSER_CORP = 302;
+    // 弹射版
+    DALLETRAP_CROP = 303;
+    // 特斯拉
+    TESLA_CORP = 304;
+    // 跳蚤地雷
+    BOMB_MAN_CORP = 401;
+
+    // Boss
+    BOSS_CORP = 501;
+    // 人类兵种
+    HUMMAN_CORP = 601;
+    // 机械兵种
+    MACHINE_CORP = 602;
+    // 兽族兵种
+    ORCISH_CORP = 603;
+    // 野兽
+    WILD_ANIMAL = 604;
+
+    // 狙击系兵种
+    SNIPER_MERCENARY = 701;
+    // 爆破系兵种
+    BOMB_MERCENARY = 702;
+    // 冲锋系兵种
+    CHARGE_MERCENARY = 703;
+
+    // AI士兵
+    AI_SOLDIER = 704;
+
+    // 辅助兵种
+    SUPPORT_SOLDIER = 705;
+
+    // 一英雄二兵种版本的兵种大类
+    HERO_VERSION_MERCENARY = 706;
+
+    // 英雄
+    HERO_CORP = 801;
+}
+
+// 地图新号类型
+enum EnmMapSignalType
+{
+	ATTACK = 1;
+	FALLBACK = 2;
+	SENDTXT = 3;
+	GATHER = 4;
+}
+
+// 游戏状态枚举，在
+enum EnmStatusType
+{
+	NewBuildingUnlocked = 1;			 // 有新建筑解锁
+    QuestCompletet = 2;                  // 有任务完成
+    AchievementCompletet = 3;            // 有成就完成
+}
+
+// 任务统计事件枚举
+enum EnmTaskMsgType
+{
+    Task_OccupyStore = 101;               // 占领仓库
+    Task_OccupyBaseCenter = 102;          // 占领指挥所
+
+    Task_DestroyBattleUnit = 201;         // 摧毁防御单元
+    Task_DestroySoldier = 207;            // 消灭敌方士兵
+    Task_DestroySoldierNormol = 208;      // 消灭小兵
+    Task_DestroySoldierCaptial = 209;     // 消灭队长
+    Task_TriggerMine = 214;               // 触发地雷
+    Task_TriggerGeyser = 215;             // 触发喷泉
+    Task_TriggerDalleTrap = 216;          // 触发弹射板
+
+    Task_CallMercenary = 301;             // 召唤雇佣兵
+
+    Task_AttackEnemy = 401;               // 攻击玩家
+    Task_GameWin = 402;                   // 游戏胜利
+    Task_PillageGold = 403;               // 掠夺金币
+    Task_CollectGole = 404;               // 收集金币
+    Task_GainGrade = 405;                 // 获得评价
+    Task_StudyTechEnd = 406;              // 研究科技
+    Task_UpgradeBuildingEnd = 407;        // 升级建筑
+
+    Task_CostGold = 501;                  // 消费金币
+    Task_CostDiamond = 502;               // 消费钻石
+
+    Task_FactoryRapid = 601;              // 矿产加速
+    Task_barracksRapid = 602;             // 兵营加速
+
+     Task_PillageSteel = 701;              //掠夺颜料
+    Task_PillageStone = 702;              //掠夺合金
+
+    Task_collectionGold = 703;            //收集金币
+    Task_collectionSteel = 704;           //收集颜料
+    Task_collectionStone = 705;           //收集合金
+
+    Task_collectionGoldCount = 706;            //收集金币N次
+    Task_collectionSteelCount = 707;           //收集颜料N次
+    Task_collectionStoneCount = 708;           //收集合金N次
+
+    Task_GainDeadGrade = 709;                 // 获得死亡评价
+    Task_GainTimeGrade = 710;                 // 获得时间评价
+    Task_GainCaptureGrade = 711;                 // 获得占领评价
+    Task_GainCommboGrade = 712;                 // 获得连击评价
+
+    Task_ViewReplay = 713;                      //观看一次回放
+    Task_ViewCreationMap = 714;                 //参观一个玩家
+    Task_RevengeAttack = 715;                   //进行一次复仇
+
+    Task_CostSteel = 716;                       // 消费颜料
+    Task_CostStone = 717;                        // 消费合金
+
+    Task_1V1Attack = 720;                        //进行一场1v1战斗
+    Task_1V1Win = 721;                           //1V1获胜一场
+    Task_1V1WinContinuous = 722;                 //连续1V1获胜
+    Task_RevengeWin = 723;                   //复仇战胜利一次
+    Task_1V1BreakCanno = 724;                 //1V1摧毁三个炮塔
+    Task_PutDefence = 725;                  //放置防御
+
+    Task_3v3Attack = 750;                   // 3v3战斗次数
+    Task_3v3AttackWin = 751;                // 3v3获胜一场
+    Task_3v3KillPeople = 752;               // 3v3消灭人口
+    Task_3v3BreakCanno = 753;               // 3v3消灭炮塔或基地
+    Task_3v3KillPlayer = 754;               // 3v3消灭玩家
+    Task_3v3UseBigSkill = 755;              // 3v3使用大招
+    Task_3v3SummonPeopleCount = 756;        // 3v3召唤人口数
+
+    Task_PVESingleLevelPass = 801;                // 通过单人战役副本次数
+    Task_PVEAttackDefenseLevelPass = 802;         // 通过攻防战关卡次数
+}
+
+enum EnmAllianceMember
+{
+    ENM_ALLIANCE_MEMBER_ORDINARY   = 1;    // 普通
+    ENM_ALLIANCE_MEMBER_CHIEF      = 2;    // 参谋员
+    ENM_ALLIANCE_MEMBER_PRESIDENT  = 3;    // 会长
+}
+
+
+enum EnmAllianceJoinCond
+{
+    ENM_ALLIANCE_JOIN_COND_CAN     = 1;    // 任何人可以加入
+    ENM_ALLIANCE_JOIN_COND_APPLY   = 2;    // 需要申请才能加入
+    ENM_ALLIANCE_JOIN_COND_FORBID  = 3;    // 禁止加入
+}
+
+
+enum EnmAllianceJoinReply
+{
+    ENM_ALLIANCE_JOIN_REPLY_SUCCESS         = 1;    // 成功加入军团
+    ENM_ALLIANCE_JOIN_REPLY_APPLY           = 2;    // 申请成功
+}
+
+// 技能类型
+enum EnmSkillType
+{
+	ULTIMATE = 1;    // 大招
+	SUBSKILL = 2; 	 // 兵种技能
+}
+
+// 聊天频道
+enum EnmChatChannel
+{
+	ENM_CHAT_CHANNEL_WORLD		= 1;	// 世界频道
+	ENM_CHAT_CHANNEL_ALLIANCE	= 2;    // 军团频道
+	ENM_CHAT_CHANNEL_PRIVATE	= 3;    // 私人频道
+    ENM_CHAT_CHANNEL_ROOM       = 4;    // 房间频道
+    ENM_CHAT_CHANNEL_BATTLE     = 5;    // 备战频道
+}
+
+
+// PVP 状态
+enum EnmPVPStatus
+{
+	ENM_PVP_STATUS_INIT             = 0;    // 初始状态(客户端使用, 服务器没有使用该状态)
+    ENM_PVP_STATUS_NONE             = 1;    // 不在PVP, PVP 开始前和结束后都在这个状态
+    ENM_PVP_STATUS_TEAM             = 2;    // 组队 或者 开房间
+    ENM_PVP_STATUS_MATCH            = 3;    // 匹配
+    ENM_PVP_STATUS_WAIT_READY       = 4;    // 等待玩家ready
+    ENM_PVP_STATUS_FIGHT            = 5;    // 战斗中
+    ENM_PVP_STATUS_END              = 6;    // 结算
+}
+//游戏服务器倒计时状态
+enum EnmServerStatus
+{
+	ENM_STATUS_ON_MAINTAIN  = 1;// 即将停服维护
+	ENM_STATUS_ON_STOP      = 2;// 即将停服
+}
+
+
+enum EnmPVPNum
+{
+    ENM_PVP_NUM_NULL    = 0;
+    ENM_PVP_NUM_ONE     = 1;    // 1v1
+    ENM_PVP_NUM_TWO     = 2;    // 2v2
+    ENM_PVP_NUM_THREE   = 3;    // 3v3
+}
+
+
+// PVP 战斗结果
+enum EnmPVPResult
+{
+    ENM_PVP_RESULT_WIN  = 1;    // 赢
+    ENM_PVP_RESULT_LOSE = 2;    // 输
+    ENM_PVP_RESULT_DRAW = 3;    // 平
+}
+
+
+enum EnmPVPTeam
+{
+	ENM_PVP_TEAM_NONE   = 0;
+    ENM_PVP_TEAM_RED    = 1;    // 红队
+    ENM_PVP_TEAM_BLUE   = 2;    // 蓝队
+}
+
+
+//网络运营商枚举
+enum NetWorkSP {
+    TELECOM = 1;//电信
+    MOBILE = 2;//移动
+    UNICOM = 3;//联通
+    OTHERSP = 20;//其他
+}
+
+enum BattleCardType
+{
+	CARD_NONE = 0;
+    CARD_HERO = 1;  // 英雄
+	CARD_SOLDIER = 2; // 兵种
+	CARD_SKILL = 3; // 技能，注：在备战功能中当前字段表示英雄类型
+}
+
+//备战卡牌类型
+enum PreWarCardType
+{
+    ENM_PRE_WAR_CARD_NULL = 0;
+    ENM_PRE_WAR_CARD_HERO = 1; // 英雄
+    ENM_PRE_WAR_CARD_SOLDIER = 2; // 小兵
+}
+
+// PVP 机器人类型
+enum EnmRobotType
+{
+    ENM_ROBOT_TYPE_NONE         = 0;    // 初始化使用
+    ENM_ROBOT_TYPE_PLAYER       = 1;    // 玩家
+    ENM_ROBOT_TYPE_EASY         = 10;    // 菜鸟机器人
+    ENM_ROBOT_TYPE_LEVEL        = 11;    // 连败n此的匹配的机器人
+    ENM_ROBOT_TYPE_TIMEOUT      = 12;    // 超时匹配的机器人
+    ENM_ROBOT_TYPE_NOVICE       = 13;    // 新手机器人
+    ENM_ROBOT_TYPE_INTERMEDIATE = 14;    // 中级机器人
+    ENM_ROBOT_TYPE_SENIOR       = 15;    // 高级机器人
+    ENM_ROBOT_TYPE_HOSTED       = 16;    // 托管机器人
+    ENM_ROBOT_TYPE_3V3_MATE_NEWBIE  = 17;    // 3v3 队友机器人
+    ENM_ROBOT_TYPE_3V3_TO_NEWBIE    = 18;    // 3v3 对方机器人
+    ENM_ROBOT_TYPE_3V3_MATE_WIN     = 19;   // 3v3 连胜超过n次匹配队友的机器人
+    ENM_ROBOT_TYPE_3V3_TO_WIN       = 20;   // 3v3 连胜超过n次匹配对方的机器人
+}
+
+enum EnmBoxStatus
+{
+    Locking = 1;  // 未解锁状态, 即：锁住状态
+    Unlocking = 2;// 解锁状态,   即：未锁住状态
+}
+
+enum EnmBoxQuality
+{
+    Green = 1;
+    Blue  = 2;
+    Purple = 3;
+    Orange = 4;
+}
+
+enum EnmPVPMode
+{
+	ENM_MODE_1V1 = 1;
+    ENM_MODE_3V3 = 2;
+    ENM_MODE_1V1_TUTO = 3;  // 本地生效
+}
+
+
+enum EnmPlayerStat
+{
+    ENM_PLAYER_STAT_OFFLINE     = 0;	// 离线
+    ENM_PLAYER_STAT_GAME        = 1;    // 游戏中
+    ENM_PLAYER_STAT_TEAM        = 2;    // 组队
+    ENM_PLAYER_STAT_ONLINE      = 3;	// 在线
+}
+
+// 3v3人机难度类型
+enum EnmPVEHardType
+{
+    ENM_HARD_NONE   = 0;
+    ENM_HARD_NOVICE = 1;        //新手
+    ENM_HARD_MIDDLE = 2;        //中级
+    ENM_HARD_HIGH   = 3;        //高级
+}
+
+// PVP 类型
+// 与pvp统一结算表想对应，不能随意修改值或调换顺序
+enum EnmPVPType
+{
+    ENM_PVP_TYPE_GVG            = 1;    // 3V3 快速匹配
+    ENM_PVP_TYPE_TEAM           = 2;    // 3V3 多人匹配
+    ENM_PVP_TYPE_ROOM_3V3       = 3;    // 3V3 开房间
+    ENM_PVP_TYPE_PVE_3V3        = 4;    // 3V3 人机
+    ENM_PVP_TYPE_PVP            = 5;    // 1V1 快速匹配 
+    ENM_PVP_TYPE_PVE_1V1        = 6;    // 1v1 人机
+    ENM_PVP_TYPE_ROOM_1V1       = 7;    // 1v1 开房间
+    ENM_PVP_TYPE_PVP_FRIENDLY   = 8;    // 1V1 友谊赛
+    ENM_PVP_TYPE_GVG_FRIENDLY   = 9;    // 3V3 友谊赛
+}
+
+// pvp战备状态
+enum EnmPvpBattleReportType
+{
+    ENM_BATTLE_NULL   = 0;
+    ENM_BATTLE_REPORT = 1;   //战备状态
+    ENM_WAIT_READY    = 2;   //等待状态
+}
+
+// 军团职务
+enum EnmAllianceMemType
+{
+    ENM_AMT_INIT = 1;
+    ENM_AMT_OFFICE = 2;
+    ENM_AMT_PRESIDENT = 3;
+}
+
+// 玩家备战类型
+enum EnmPrepareWarType
+{
+    ENM_PREPAREWAR_NULL   = 0;
+    ENM_PREPAREWAR_PVP    = 1; //pvp备战
+    ENM_PREPAREWAR_PVE    = 2; //pve备战
+    ENM_PREPAREWAR_3V3PVP = 3; //3v3备战
+    ENM_PREPAREWAR_3V3PVE = 4; //3v3人机备战
+}
+
+// 玩家备战状态
+enum EnmPrepareWarStatus
+{
+    ENM_PREPAREWAR_PREWAR = 1; //战前备战
+    ENM_PREPAREWAR_WARING = 2; //战中备战
+}
+
+// 副本星级
+enum EnmMissionStar
+{
+    ENM_MISSION_STAR_ZERO  = 0;
+    ENM_MISSION_STAR_ONE   = 1;
+    ENM_MISSION_STAR_TWO   = 2;
+    ENM_MISSION_STAR_THREE = 3;
+}
+
+
+// 备战卡牌数量
+enum EnmBattleCardNum
+{
+    // 英雄1个
+    ENM_BATTLE_CARD_NUM_HERO    = 1;
+    // 技能2个
+    ENM_BATTLE_CARD_NUM_SKILL   = 2;
+    // 兵种3个
+    ENM_BATTLE_CARD_NUM_SOLDIER = 3;
+    // 卡组数量最大上线
+    ENM_BATTLE_CARD_DECK_BIGNUM = 5;
+}
+
+// MVP类型
+enum EnmPVPMvpType
+{
+    ENM_PVP_MVP_TYPE_NONE   = 0;  //无mvp
+    ENM_PVP_MVP_TYPE_WIN   = 1;     //胜利mvp
+    ENM_PVP_MVP_TYPE_LOSE   = 2;    //失败mvp
+}
+
+//好友列表类型
+enum EnmFriendListType
+{
+    ENM_FRIEND_NULL   = 0;
+    ENM_FRIEND_FOLLOW = 1; //关注列表
+    ENM_FRIEND_FANS   = 2; //粉丝列表
+    ENM_FRIEND_BLACK  = 3; //黑名单
+    ENM_FRIEND_CHAT   = 4; //聊天列表
+}
+
+
+// 邮件类型
+enum EnmMailType
+{
+    ENM_MAIL_TYPE_SYSTEM    = 1;    // 系统邮件
+    ENM_MAIL_TYPE_FRIEND    = 2;    // 好友邮件
+}
+
+
+// 邮件子类型
+enum EnmMailSubType
+{
+    ENM_MAIL_SUBTYPE_NOTICE = 1;    // 通知邮件
+    ENM_MAIL_SUBTYPE_ATTACH = 2;    // 附件邮件
+}
+
+
+// 邮件状态
+enum EnmMailStat
+{
+    ENM_MAIL_STAT_UNREAD    = 1;    // 未读
+    ENM_MAIL_STAT_READ      = 2;    // 已读
+    ENM_MAIL_STAT_UNGET     = 3;    // 未领取
+}
+
+// 开房间玩法, 玩家在房间中的位置
+enum EnmRoomPosition
+{
+    ENM_ROOM_ONE  = 0;
+    ENM_ROOM_TWO  = 1;
+    ENM_ROOM_TREE = 2;
+    ENM_ROOM_FOUR = 3;
+    ENM_ROOM_FIVE = 4;
+    ENM_ROOM_SIX  = 5;
+}
+
+enum EnmInviteType
+{
+    ENM_INVITE_TYPE_FRIEND   = 1;
+    ENM_INVITE_TYPE_ALLIANCE = 2;
+    ENM_INVITE_TYPE_RECENT   = 3;
+}
+
+//信誉修改类型,值与PVP惩罚表对应，不能随意修改
+enum EnmCreditAlterType
+{
+    ENM_PVP_REPORT_HANGUP         = 1; //举报挂机
+    ENM_PVP_REPORT_FEED         = 2; //举报送人头
+    ENM_PVP_REPORT_NEGATIVE         = 3; //举报消极
+    ENM_PVP_REPORT_ABUSE         = 4; //举报辱骂
+    ENM_PVP_REPORT_PERFORMER         = 5; //举报演员
+    ENM_PVP_REPORT_ADDON         = 6; //举报外挂
+    ENM_PVP_SETTLEMENT_DUCT         = 10; //结算减少
+    ENM_PVP_SETTLEMENT_ADD         = 11;  //结算增加
+    ENM_RELEASE_SUSPENSION  = 12;         //解除禁赛增加信誉 
+    ENM_PVE_1V1_ADD         = 13;         //pvp结算增加
+}
+
+//BOXTYPE
+enum EnmBoxType
+{
+    ENM_BOX_TYPE_FULL = 0;//位置已满
+    ENM_BOX_TYPE_GREEN = 1;
+    ENM_BOX_TYPE_BLUE = 2;
+    ENM_BOX_TYPE_PURPLE = 3;
+    ENM_BOX_TYPE_ORANGE = 4;
+    ENM_BOX_TYPE_LIMIT = 5;//当日获取已达上限
+    ENM_BOX_TYPE_REPUTATION = 6;//信誉过低无宝箱
+    ENM_BOX_TYPE_NONE = 7;//不掉落宝箱
+    ENM_BOX_TYPE_LOSE = 8;//失败或平局无宝箱
+}
+
+// PVP 统计类型
+enum EnmPvpStatType
+{
+    // RTT
+    ENM_PVP_STAT_TYPE_RTT       = 1;
+    // UPDATE
+    ENM_PVP_STAT_TYPE_UPDATE    = 2;
+}
+
+//是否同步redis数据
+enum EnmSyncRedisData
+{
+    ENM_NOT_SYNC_REDIS_DATA = 0;
+    ENM_SYNC_REDIS_DATA = 1;
+}

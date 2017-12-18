@@ -1,0 +1,56 @@
+syntax = "proto2";
+import "cs_common.proto";
+
+package cs;
+
+message CSPkgHead
+{
+    // 命令字, 当前所有命令都为 0
+    required uint32 CmdID     = 1;
+
+    // 序列号 
+    required uint32 MsgSeqID  = 2;
+
+    // 加密类型, @see EnmEncryptType
+    required uint32 EncryptType = 3;
+
+    // C++层错误码和错误提示语, 服务器回包时才会有这个值 @see EnmStatusCode
+    optional uint32  RetCode   = 4;
+	optional string ErrMessage = 5;
+
+    // 压缩类型, @see EnmCompressType
+    required uint32 CompressType = 6;
+    
+    // Notify 序列号, 由服务器更新
+    optional uint32 NotifyMsgSeqID = 7;
+}
+
+// TCP底层包结构
+// Body: 如果是C->S，为具体的业务PB结构
+//       如果是S->C，为 CSPKG_Body_S2C
+message CSPKG
+{
+    required CSPkgHead Head = 1;
+    required bytes Body     = 2;
+}
+
+// 服务器给客户端的回包
+// Body: 具体的业务PB结构
+// CommonData: 统用数据包
+message CSPKGBody_S2C
+{
+    required bytes 						Body     	= 1;
+	optional CSPKGBody_S2C_Common		CommonData	= 2;
+}
+
+    // C++层错误码和错误提示语, 服务器回包时才会有这个值 @see EnmStatusCode
+// 基础包
+message CSPKGBody_S2C_Common
+{
+	optional BaseInfoType 	    baseInfo 	    = 1;// 基础数据
+	repeated PlayerUnit	  	    unitList 	    = 2;// 玩家战斗单元列表
+    repeated PlayerCard         cardList        = 3;// 玩家卡牌信息
+	repeated int32		 	    statusList 	    = 4;// 游戏状态变更列表 EnmStatusType
+    optional int32              serverStatus    = 5;// 游戏服务器进入当前倒计 维护/停服 状态 @see EnmServerStatus   
+    optional int32              countDown       = 6;// 存在此值则进入倒计时秒数   
+}

@@ -1,0 +1,111 @@
+syntax = "proto2";
+import "cs_common.proto";
+import "cs_enum.proto";
+package cs;
+
+
+//设别参数相关
+message DeviceDataType
+{
+    optional string Device = 1;//设备ID
+    optional string SessionDevice = 2;//忽略此字段
+    optional string IMEI = 3;//手机IMEI
+    optional string NTYPE = 4;//网络类型
+    optional string OS = 5;//操作系统,例如:android4.2
+    optional int32  MemSize = 6;//诶村大小
+    optional string DISP = 7;//手机分辨率
+    optional string MAC = 8;//mac地址
+    optional NetWorkSP NetSP = 9 [default = TELECOM];//运营商
+}
+
+// 登陆请求包请求
+message CSLoginReq
+{
+	required string PlayerAccount = 1;//玩家帐号 boyce100
+	required string Token = 2;//帐号系统返回的token
+    required VersionResourceType VersionResource = 3;
+	optional string PlatType = 4;//平台类型 XLCW
+	optional DeviceDataType DeviceData = 5;//设备相关
+	optional string PlayerPassWd = 6;//玩家密码
+}
+
+// 登陆请求包请求返回
+message CSLoginRes
+{
+	optional int32 ServerTime = 1;//服务器时间戳
+	optional bool ForceUpdate = 2;//是否需要强制更新true 更新 false不更新
+	optional string DownLoadUrl = 3;//下载地址
+	optional int32 PlayerId = 4;//玩家ID boyce100
+    optional string Name = 5;//玩家昵称
+	optional int32 RoleState = 6;//角色状态 是否已经确定了颜色
+	optional string Hash = 7;//安全hash 
+    optional bytes SecretKey = 8;// login回包带回去的秘钥
+    optional bool IsBeAttacking = 9; // 当前是否正被攻击
+    optional uint32 BeAttackingLeftTime = 10;//正被攻击的剩余时间
+    optional uint64 Env = 11;//环境ID
+    optional string Notify = 12;//玩家正防御提示语言
+    optional int32 DefenceAeaId = 13;//玩家正在防御的地块ID
+}
+
+// 登陆请求包请求
+message CSReloginReq
+{
+	required string PlayerAccount = 1;//玩家帐号 boyce100
+	required string Token = 2;//帐号系统返回的token
+    required VersionResourceType VersionResource = 3;
+	optional string PlatType = 4;//平台类型 XLCW
+	optional DeviceDataType DeviceData = 5;//设备相关
+
+}
+
+// 登陆请求包请求返回
+message CSReloginRes
+{
+	optional int32 ServerTime = 1;//服务器时间戳
+	optional bool ForceUpdate = 2;//是否需要强制更新true 更新 false不更新
+	optional string DownLoadUrl = 3;//下载地址
+	optional int32 PlayerId = 4;//玩家ID boyce100
+    optional string Name = 5;//玩家昵称
+	optional int32 RoleState = 6;//角色状态 是否已经确定了颜色
+	optional string Hash = 7;//安全hash 
+    optional bytes SecretKey = 8;// login回包带回去的秘钥
+    optional bool IsBeAttacking = 9; // 当前是否正被攻击
+    optional uint32 BeAttackingLeftTime = 10;//正被攻击的剩余时间
+}
+
+message CSFinalizeaccountReq
+{
+	required int32 FinalColor = 1;//玩家颜色
+	required string FinalName = 2;//玩家名称
+}
+
+message CSFinalizeaccountRes
+{
+	optional string Name = 1;//玩家名称
+	optional int32 Status = 2;//状态 0 成功
+	optional string Reason = 3;//失败原因
+}
+
+// 获得随机名字请求 CS_GET_RANDOM_NAME_REQ = 10111;
+message CSGetRandomNameReq
+{
+	
+}
+
+// 获得随机名字回复 CS_GET_RANDOM_NAME_RES = 10112;
+message CSGetRandomNameRes
+{
+	optional string Name = 1; 
+}
+
+// 修改名字请求 CS_CHANGE_NAME_REQ = 10113;
+message CSChangeNameReq
+{
+	optional string NewName = 1;
+}
+
+// 修改名字请求 CS_CHANGE_NAME_RES = 10114;
+message CSChangeNameRes
+{
+	
+}

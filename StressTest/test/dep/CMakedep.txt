@@ -1,0 +1,36 @@
+# 第三方依赖文件路径
+SET(THIRD_LIB_PATH "${PROJECT_SOURCE_DIR}/../../dep")
+
+# TODO boost 路径
+
+# muduo 路径
+SET(MUDUO "${THIRD_LIB_PATH}/muduo")
+SET(MUDUO_LIB_PATH "${MUDUO}/lib")
+INCLUDE_DIRECTORIES(${MUDUO}/include)
+
+# protobuf 路径
+SET(PROTOBUF "${THIRD_LIB_PATH}/google")
+SET(PROTOBUF_LIB_PATH "${PROTOBUF}/lib64")
+#INCLUDE_DIRECTORIES(${PROTOBUF}/include)
+
+SET(TW_BASE_LIB_PATH "${PROJECT_SOURCE_DIR}/../../src/base")
+ADD_LIBRARY(tw_base_lib STATIC IMPORTED)
+SET_PROPERTY(TARGET tw_base_lib PROPERTY IMPORTED_LOCATION ${TW_BASE_LIB_PATH}/libtwbase.a)
+
+# 添加库
+ADD_LIBRARY(protobuf_lib STATIC IMPORTED)
+SET_PROPERTY(TARGET protobuf_lib PROPERTY IMPORTED_LOCATION ${PROTOBUF_LIB_PATH}/libprotobuf.a)
+
+SET(TW_PROTO_LIB_PATH "${PROJECT_SOURCE_DIR}/../../protocol")
+ADD_LIBRARY(tw_proto_lib STATIC IMPORTED)
+SET_PROPERTY(TARGET tw_proto_lib PROPERTY IMPORTED_LOCATION ${TW_PROTO_LIB_PATH}/libtwproto.a)
+
+ADD_LIBRARY(muduo_base_lib STATIC IMPORTED)
+SET_PROPERTY(TARGET muduo_base_lib PROPERTY IMPORTED_LOCATION ${MUDUO_LIB_PATH}/libmuduo_base.a)
+
+ADD_LIBRARY(muduo_net_lib STATIC IMPORTED)
+SET_PROPERTY(TARGET muduo_net_lib PROPERTY IMPORTED_LOCATION ${MUDUO_LIB_PATH}/libmuduo_net.a)
+
+
+# 设置依赖库列表
+SET(DEP_LIB_LISTS "tw_proto_lib" "protobuf_lib"  "muduo_base_lib" "muduo_net_lib" "tw_base_lib")
