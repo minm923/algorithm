@@ -64,6 +64,13 @@ public:
     inline int numerator() const { return numerator_; }
     inline int denominator() const { return denominator_; }
 
+    const Rational operator+(const Rational& that) const
+    {
+        int iLcm = lcm(denominator_, that.denominator());
+        int iN   = iLcm/denominator_*numerator_ + iLcm/that.denominator()*that.numerator();
+        return Rational(iN, iLcm);
+    }
+
     const Rational operator+=(const Rational& that)
     {
         int iLcm = lcm(denominator_, that.denominator());
@@ -104,6 +111,7 @@ private:
     int denominator_;
 };
 
+/*
 const Rational operator+(const Rational& hls, const Rational& rhs)
 {
     int iLcm = lcm(hls.denominator(), rhs.denominator());
@@ -111,6 +119,7 @@ const Rational operator+(const Rational& hls, const Rational& rhs)
     
     return Rational(iN, iLcm);
 }
+*/
 
 const Rational operator-(const Rational& hls, const Rational& rhs)
 {
@@ -139,6 +148,9 @@ std::ostream& operator<<(std::ostream& os, const Rational& R)
 
 // 输入输出运算符必须是非成员函数
 // TODO : 各种各样的输入形式 3, 3.5, -1, -1/5, -0.2
+// S1 判断有效性 溢出
+// S2 先转换成小数
+// S3 右移小数点转换为分数 即 有理数
 std::istream& operator>>(std::istream& is, Rational& R)
 {
     // copy and swap for exception safety
@@ -158,15 +170,13 @@ std::istream& operator>>(std::istream& is, Rational& R)
 
 int main(int argc, char* argv[])
 {
-    Rational r2(-20, 5);
-    Rational r4(1, 2);
-    Rational r3 = r2 + (1, 2);// 此处非(1,2)隐式转换 而是逗号表达式 2进行隐式转换
+    Rational r1(-20, 5);
 
+    //Rational r2 = 1 + r1;// 1无法隐式转换
+    //std::cout << r2 << std::endl;
+
+    Rational r3 = r1 + 1;
     std::cout << r3 << std::endl;
-
-    std::cin  >> r3;
-    Rational r5 = r2 / r3;
-    std::cout << r5 << std::endl;
     
     return 0;    
 }
