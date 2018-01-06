@@ -23,7 +23,22 @@ class PersonImpl : public Person
 {
 public:    
     PersonImpl(const std::string& name, const Data& birthday, const Address& addr);
+    // rule of three
     virtual ~PersonImpl() {}
+
+    PersonImpl(const PersonImpl& that) 
+    {   
+        name_      = that.name_; 
+        birthday_  = that.birthday_;
+        addr_      = that.addr_;
+    }
+
+    PersonImpl& operator=(const PersonImpl& that)
+    {
+        name_      = that.name_; 
+        birthday_  = that.birthday_;
+        addr_      = that.addr_;
+    }
 
     std::string name() const { return name_; };
     Data   birthDate() const { return birthday_; };
