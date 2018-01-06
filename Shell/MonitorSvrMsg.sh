@@ -27,6 +27,10 @@ do
             ROOMSVR_ID=$(ps aux | grep $OWNER | grep --color -e '\./roomsvr' | grep -v 'grep' | grep -v 'tail' |  awk '{printf $13}')
             SVR_IDS=${SVR_IDS}\\\|${ROOMSVR_ID}
     ;;        
+        friendsvr)
+            FRIENDSVR_ID=$(ps aux | grep $OWNER | grep --color -e '\./friendsvr' | grep -v 'grep' | grep -v 'tail' |  awk '{printf $13}')
+            SVR_IDS=${SVR_IDS}\\\|${FRIENDSVR_ID}
+    ;;        
         *)
         echo "$VAR not found"            
         exit 1
@@ -37,8 +41,7 @@ done
 SVR_IDS=${SVR_IDS}\\\)
 echo $SVR_IDS
 
-# modify here
-PREFIX=gamesvr
+PREFIX=friendsvr
 FILE_NAME_REG=${PREFIX}_[0-9]*.log*
 #echo $FILE_NAME_REG
 
