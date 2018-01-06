@@ -1,0 +1,124 @@
+#!/bin/bash
+KEY_WORD=$1
+FILE=$2
+grep $KEY_WORD $FILE | grep '_POST' | cut -d " " -f 2 | awk -F ":" '{s = (int($2/3)+1) * 3; a[$1, s]++;}END{for (j=0;j<=23;j++) {for (k=3;k<=60;k=k+3) if(a[j, k]){printf "%02d:%02d-%02d:%02d %s\n", j, k-3, j,
+ k, a[j, k] } }}' | sort -rn -t " " -k 2 | head -n 10
+
+
+
+#!/bin/sh/expect -f
+cd /data/www/gametest/tw/runtime/stat/logs
+set var1 stat_
+set var2 [exec date -d yesterday "+\%Y\%m\%d"]
+set var3 ${var1}${var2}.log
+exec tar -zcvf $var3.tar.gz $var3
+spawn scp $var3.tar.gz kay@192.168.3.200:/home/kay/work/xlcwcomm/DataAnalyse/server/lua/nginx-1.8.0/xlcwtw/server/logs
+expect "*assword"
+send "kayxlcw19890121\r"
+send "exit\r"
+expect eof
+exec rm -rf $var3.tar.gz
+exec touch /home/gaomin/work/a 
+
+
+#!/bin/sh
+rm -rf www
+rm -rf tw.*
+rm -rf tactilwarTest_*
+svn export http://192.168.1.205/tw/Server/newsrc www
+datestr=`date "+%Y%m%d"`
+tar -zcvf tw.www."$datestr"_code.tar.gz www
+/usr/local/mysql/bin/mysqldump -uroot tactilwarTest>tactilwarTest_"datestr".sql
+zip -q tw.www."$datestr"_sql.zip tactilwarTest_"datestr".sql
+
+/usr/bin/expect <<-EOF
+spawn scp -P13111 ./tw.www.${datestr}_sql.zip user02@192.168.1.250:~/tw
+expect "password:"
+set timeout 300
+send "xlcw*2015\r"
+set timeout 300
+spawn scp -P13111 ./tw.www.${datestr}_code.tar.gz user02@192.168.1.250:~/tw
+expect "password:"
+send "xlcw*2015\r"
+send "exit\r"
+expect eof
+EOF
+
+grep 'pullbattlepreview' ./app_20161124.log | grep 'RESP' | cut -d " " -f 10 | cut -d '|' -f 3 | sed 's/.....//'
+
+{"values":{"1":{"values":{"1":6237210,"2":"jum1","3":420,"4":1,"5":2441800,"6":2038000,"7":2647000,"8":75,"9":32000000,"10":100,"11":7,"12":0,"13":0,"14":0,"15":0,"16":0,"17":1020.0900268555,"18":0,"19":0,"20":0}},"2":{"values":{"1":32412,"2":"\u7095\u4e0a\u968f\u4f60\u5f04","3":349,"4":3,"5":15900000,"6":6000000,"7":10000000,"8":850,"9":32002180,"10":100,"11":7,"12":0,"13":0,"14":0,"15":0,"16":0,"17":1010.1599731445,"18":0,"19":0,"20":180}},"3":422299,"4":262399,"5":164899,"6":{"values":{"1":5,"2":[{"values":{"1":8,"2":307}}]}},"7":[{"values":{"1":712,"2":1}},{"values":{"1":718,"2":9}},{"values":{"1":722,"2":8}}],"8":[],"9":5,"10":1,"11":[{"values":{"1":712,"2":1}}],"12":[]}}
+{"values":{"1":{"values":{"1":6237210,"2":"jum1","3":420,"4":1,"5":2441800,"6":2038000,"7":2647000,"8":75,"9":32000000,"10":100,"11":7,"12":0,"13":0,"14":0,"15":0,"16":0,"17":1020.0900268555,"18":0,"19":0,"20":0}},"2":{"values":{"1":32412,"2":"\u7095\u4e0a\u968f\u4f60\u5f04","3":349,"4":3,"5":15900000,"6":6000000,"7":10000000,"8":850,"9":32002180,"10":100,"11":7,"12":0,"13":0,"14":0,"15":0,"16":0,"17":1010.1599731445,"18":0,"19":0,"20":180}},"3":422299,"4":262399,"5":164899,"6":{"values":{"1":5,"2":[{"values":{"1":8,"2":307}}]}},"7":[{"values":{"1":712,"2":1}},{"values":{"1":718,"2":9}},{"values":{"1":722,"2":8}}],"8":[],"9":5,"10":1,"11":[{"values":{"1":712,"2":1}}],"12":[{"values":{"1":303,"2":1}},{"values":{"1":320,"2":2}},{"values":{"1":321,"2":4}},{"values":{"1":301,"2":5}},{"values":{"1":322,"2":8}},{"values":{"1":323,"2":5}},{"values":{"1":307,"2":1}},{"values":{"1":352,"2":8}},{"values":{"1":353,"2":1}},{"values":{"1":308,"2":2}},{"values":{"1":350,"2":7}},{"values":{"1":351,"2":1}},{"values":{"1":304,"2":3}},{"values":{"1":324,"2":5}},{"values":{"1":325,"2":1}},{"values":{"1":314,"2":5}},{"values":{"1":358,"2":5}},{"values":{"1":359,"2":7}},{"values":{"1":326,"2":1}}]}}
+{"values":{"1":{"values":{"1":6237210,"2":"jum1","3":420,"4":1,"5":2441800,"6":2038000,"7":2647000,"8":75,"9":32000000,"10":100,"11":7,"12":0,"13":0,"14":0,"15":0,"16":0,"17":1020.0900268555,"18":0,"19":0,"20":0}},"2":{"values":{"1":32412,"2":"\u7095\u4e0a\u968f\u4f60\u5f04","3":349,"4":3,"5":15900000,"6":6000000,"7":10000000,"8":850,"9":32002180,"10":100,"11":7,"12":0,"13":0,"14":0,"15":0,"16":0,"17":1010.1599731445,"18":0,"19":0,"20":180}},"3":422299,"4":262399,"5":164899,"6":{"values":{"1":5,"2":[{"values":{"1":8,"2":307}}]}},"7":[{"values":{"1":712,"2":1}},{"values":{"1":718,"2":9}},{"values":{"1":722,"2":8}}],"8":[],"9":5,"10":1,"11":[{"values":{"1":712,"2":1}}],"12":[{"values":{"1":303,"2":1}},{"values":{"1":320,"2":2}},{"values":{"1":321,"2":4}},{"values":{"1":301,"2":5}},{"values":{"1":322,"2":8}},{"values":{"1":323,"2":5}},{"values":{"1":307,"2":1}},{"values":{"1":352,"2":8}},{"values":{"1":353,"2":1}},{"values":{"1":308,"2":2}},{"values":{"1":350,"2":7}},{"values":{"1":351,"2":1}},{"values":{"1":304,"2":3}},{"values":{"1":324,"2":5}},{"values":{"1":325,"2":1}},{"values":{"1":314,"2":5}},{"values":{"1":358,"2":5}},{"values":{"1":359,"2":7}},{"values":{"1":326,"2":1}}]}}
+
+grep 'pullbattlepreview' ./app_20161124.log | grep 'RESP' | cut -d " " -f 10 | cut -d '|' -f 3 | sed 's/.....//' | sed -n '2p' | ./JSON.sh -l | grep 712
+
+
+#!/bin/bash
+
+if [ ${#} == 0 ]; then
+    echo "$0 servername"
+    exit
+fi
+
+pid=`lsof -dtxt | grep run | grep "^$1" | awk '{print $2}'`
+gdb -p $pid
+
+/********************************************************************************************/
+反引号:``系统命令, 和 $() 一样, 用来引用系统命令
+
+#!/bin/bash
+
+if [ $# != 1 ];then
+    echo "Usage NetStat.sh filename";
+    echo $#;
+    exit -1; 
+fi
+
+sed 's/","/"/g' $1 | awk -F '"' -f stat.awk 
+/********************************************************************************************/
+stat.awk
+{
+    printf("PlayerID:%d\tBattleID:%d\t", $2, $3);
+    split($4, arr, ",");
+    i = 0;
+    j = 0;
+    for(rtt in arr)
+    {   
+        ++i;
+        if(arr[rtt] >= 200)    
+        {   
+            ++j;    
+        }   
+    }   
+    printf("Rate:%.2f%\n", j/i*100);
+}
+/********************************************************************************************/
+#!/bin/bash
+
+MYSQL="mysql -uroot -p123456 xllogs_analyze_tw";
+
+dbroomdatafile=data/roomfile.data
+## roomid guid stime etime 
+echo "select WarId, Guid1, Guid2, Guid3, fGuid1, fGuid2, fGuid3, ETime1, ETime2 from ResultwarGVG order by ETime1" | ${MYSQL} | sed 1d > ${dbroomdatafile};
+
+logintmpfile=/tmp/loginfile.$$$$
+dblogindatafile=data/loginfile.data
+## device cip nettype devtype
+echo "select Guid, ETime, Cip, DevType, NTYPE, OS  from AccLogin order by Guid, ETime into outfile '${logintmpfile}' fields terminated by '|'" | $MYSQL
+sed 1d ${logintmpfile} > ${dblogindatafile}
+
+## region: cip --> region
+ipdatafile=data/iplist.data
+ipregionfile=data/iplist.region
+echo "select Cip from AccLogin" | $MYSQL | sed 1d > ${ipdatafile};
+python ip2region/binding/python/calcfile.py ip2region/data/ip2region.db ${ipdatafile} > ${ipregionfile}
+
+## roomid guid
+## t100 t200 t300 t400 t500 tbig500
+rttfilelist=data/rttfilelist.txt
+ls rtt/*.log > ${rttfilelist}
+
+lua do.lua
+
+/********************************************************************************************/
+
