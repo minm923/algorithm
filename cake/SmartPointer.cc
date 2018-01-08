@@ -41,6 +41,11 @@ public:
         return *this;
     }
 
+    T* operator->()
+    {
+        return pT_;
+    }
+
     int  getCount()  { return *pCount_; }
 
 private:        
@@ -54,7 +59,8 @@ private:
     int* pCount_;
 };
 
-std::ostream& operator<<(std::ostream& os, MySmartPointer<int>& sp)
+template<class T>
+std::ostream& operator<<(std::ostream& os, MySmartPointer<T>& sp)
 {
     os << sp.getCount();
 
