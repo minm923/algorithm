@@ -156,6 +156,13 @@ std::istream& operator>>(std::istream& is, Rational& R)
     }
 }
 
+// 返回自定义类型 非内置类型的时候可以给临时变量赋值
+Rational GetOneRation()
+{
+    Rational a(1, 2);
+    return a;
+}
+
 int main(int argc, char* argv[])
 {
     Rational r2(-20, 5);
@@ -167,7 +174,11 @@ int main(int argc, char* argv[])
     std::cin  >> r3;
     Rational r5 = r2 / r3;
     std::cout << r5 << std::endl;
+
+    Rational r6(2, 4);
+    //(r2 + r4) = r6; // operator+ 返回const 此式编译不通过
     
+    std::cout << (GetOneRation() = r6) << std::endl;
     return 0;    
 }
 
