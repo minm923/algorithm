@@ -1,0 +1,44 @@
+0. Xshel
+	Xterm
+
+1. bashrc
+
+	if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+	    #debian在/lib/terminfo/x/xterm-256color
+	    export TERM='xterm-256color'
+	else
+	    export TERM='xterm-color'
+	fi
+
+2. Vundel
+	https://github.com/VundleVim/Vundle.vim
+
+3. .vimrc
+	Plugin 'octol/vim-cpp-enhanced-highlight'
+	:PluginInstall
+
+4.
+	set t_Co=256
+	syntax enable
+	let g:cpp_experimental_simple_template_highlight = 1
+	let g:cpp_member_variable_highlight = 1
+	let g:cpp_concepts_highlight = 1
+
+5.Plugin
+	Plugin 'vim-scripts/taglist.vim'
+
+	Plugin 'vim-scripts/winmanager'
+		"WinManager
+		let g:winManagerWindowLayout='FileExplorer|TagList'
+		nmap wm :WMToggle<cr>
+
+	Plugin 'a.vim'
+		:A 	在新Buffer中切换到c/h文件
+		:AS 	横向分割窗口并打开c/h文件
+		:AV 	纵向分割窗口并打开c/h文件
+		:AT 	新建一个标签页并打开c/h文件
+
+	
+
+
+

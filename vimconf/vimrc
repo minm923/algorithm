@@ -1,0 +1,115 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" " alternatively, pass a path where Vundle should install plugins
+" "call vundle#begin('~/some/path/here')
+"
+" " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'vim-scripts/winmanager'
+Plugin 'vim-scripts/a.vim'
+Plugin 'kien/ctrlp.vim'
+"Plugin 'vim-syntastic/syntastic'
+Plugin 'ervandew/supertab'
+" " The following are examples of different formats supported.
+" " Keep Plugin commands between vundle#begin/end.
+" " plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" " plugin from http://vim-scripts.org/vim/scripts.html
+" " Plugin 'L9'
+" " Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" " git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" " The sparkup vim script is in a subdirectory of this repo called vim.
+" " Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" " Install L9 and avoid a Naming conflict if you've already installed a
+" " different version somewhere else.
+" " Plugin 'ascenator/L9', {'name': 'newL9'}
+"
+" " All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" " To ignore plugin indent changes, instead use:
+" "filetype plugin on
+" "
+" " Brief help
+" " :PluginList       - lists configured plugins
+" " :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" " :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" " :PluginClean      - confirms removal of unused plugins; append `!` to
+" auto-approve removal
+" "
+" " see :h vundle for more details or wiki for FAQ
+" " Put your non-Plugin stuff after this line
+
+set nu
+
+set t_Co=256
+syntax enable
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_concepts_highlight = 1
+
+"WinManager
+let g:winManagerWindowLayout='FileExplorer|TagList'
+nmap wm :WMToggle<cr>
+
+"a.vim
+nnoremap <silent> <F12> :A<CR>
+
+
+"syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"自动补全
+"let g:SuperTabDefaultCompletionType = "<c-n>"
+
+"设置搜索高亮
+:hi Search term=standout ctermfg=0 ctermbg=3
+
+:set autoindent 
+:set smartindent
+:set tabstop=4
+:set shiftwidth=4 
+
+:set ts=4
+:set expandtab
+:set autoindent
+
+:set fileencodings=utf-8,gbk,GB2312
+nnoremap <silent> <F11> :CtrlPTag<CR>
+
+nmap sp :sp<cr>
+nmap vs :vs<cr>
+nmap q  :q<cr>
+nmap wa :wa<cr>
+
+"大括号自动换行补全缩进
+inoremap ' ''<ESC>i
+inoremap " ""<ESC>i
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap { {<CR>}<ESC>O
+
+"vim 配置打开文件不改变路径
+:set noautochdir
+
+let g:ctrlp_cmd = 'CtrlPMRU'
+let g:ctrlp_working_path_mode = 'rw'
+
+":cd ~/proj_server/trunk
