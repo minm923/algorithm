@@ -41,7 +41,6 @@ void solution(int n)
 
 int main(int argc, char* argv[])
 {
-
     solution(6);
 
     return 0;
