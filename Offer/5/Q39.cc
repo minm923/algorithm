@@ -44,6 +44,7 @@ void CreateBiTree(BinaryTreeNode **T)
 
 int main(int argc, char * argv[])
 {
+    std::cout << "Start to create BiTree, -1 == NULL NODE" << std::endl;
     BinaryTreeNode* pRoot;
     CreateBiTree(&pRoot);
 
@@ -51,3 +52,4 @@ int main(int argc, char * argv[])
 
     return 0;
 }
+
