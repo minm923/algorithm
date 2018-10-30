@@ -13,9 +13,12 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/winmanager'
 Plugin 'vim-scripts/a.vim'
-Plugin 'kien/ctrlp.vim'
 "Plugin 'vim-syntastic/syntastic'
 Plugin 'ervandew/supertab'
+Plugin 'kien/ctrlp.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'Solarized'
+"Plugin 'fatih/vim-go'
 " " The following are examples of different formats supported.
 " " Keep Plugin commands between vundle#begin/end.
 " " plugin on GitHub repo
@@ -51,9 +54,13 @@ filetype plugin indent on    " required
 " " Put your non-Plugin stuff after this line
 
 set nu
-
 set t_Co=256
+
 syntax enable
+syntax on
+set background=dark
+"colorscheme molokai
+
 let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_concepts_highlight = 1
@@ -81,6 +88,7 @@ let g:syntastic_check_on_wq = 0
 
 "设置搜索高亮
 :hi Search term=standout ctermfg=0 ctermbg=3
+:set hlsearch
 
 :set autoindent 
 :set smartindent
@@ -92,6 +100,9 @@ let g:syntastic_check_on_wq = 0
 :set autoindent
 
 :set fileencodings=utf-8,gbk,GB2312
+:set termencoding=utf-8
+:set encoding=utf-8
+
 nnoremap <silent> <F11> :CtrlPTag<CR>
 
 nmap sp :sp<cr>
@@ -109,7 +120,11 @@ inoremap { {<CR>}<ESC>O
 "vim 配置打开文件不改变路径
 :set noautochdir
 
-let g:ctrlp_cmd = 'CtrlPMRU'
+"ctrlp
+"let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_working_path_mode = 'rw'
 
-":cd ~/proj_server/trunk
+"ctags
+set tags=./.tags;,.tags
+
+"let g:go_version_warning = 0
